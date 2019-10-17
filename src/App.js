@@ -8,6 +8,7 @@ import Main from './Views/Main/Main';
 import Error404 from './Views/Error404';
 import Register from './Views/Register/Register';
 import Menu from './Componetns/Menu';
+import COnfirm from './Views/Confirm/Confirm';
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
               <Route exact path="/" component={Main} />
               {/* <Route path="/login" component={Login} /> */}
               <Route path="/register" component={Register} />
+              <Route path="/confirm/:uuid" component={COnfirm} />
 
 
               <Route component={Error404} />

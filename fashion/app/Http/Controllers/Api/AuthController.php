@@ -9,24 +9,20 @@ use App\Models\Role;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
 
     public function register(Request $request)
     {
-        // $v = Validator::make($request->all(), [
-        //     'username' => 'required|unique:users',
-        //     'password' => 'required|min:3|confirmed',
-        //     // 'role_id' => 'required'
-        // ]);
-        // if ($v->fails()) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'errors' => $v->errors(),
-        //     ], 422);
-        // }
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'registered',
+        //     'redirect' => 'confirm',
+        //     'data' => ['id'=>1],
+        // ], 200);
+        // return $request->all();
         $request->validate([
             'username' => 'required|unique:users',
             'password' => 'required|min:3|confirmed',
@@ -36,18 +32,24 @@ class AuthController extends Controller
         if (is_numeric($request->username) && ctype_digit($request->username)) {
             $user->phone = "0098" . ltrim($request->username, "0");
         }
-        if (checkEmail($request->username)) {
+        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
+        // if (checkEmail($request->username)) {
             $user->email = $request->username;
         }
         $user->password = bcrypt($request->password);
+        $user->uuid = (string) Str::uuid();
+        $user->code_confirm = rand(1001,9999);
         $user->save();
 
-        $data = [];
+        $role_id = Role::where('slug', 'USER')->first()->id;
+        $user->roles()->sync([$role_id]);
 
-        $data->role_id = ($request->role_id) ? $request->role_id : Role::where('slug', 'user')->first()->id;
-        $user->roles()->sync([$data->role_id]);
-
-        return response()->json(['status' => 'success'], 200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'registered',
+            'redirect' => 'confirm',
+            'data' => $user,
+        ], 200);
     }
 
     public function login(Request $request)

@@ -1,1 +1,1 @@
-export const urlBase = 'http://fashion.local';
+export const urlBase = 'http://localhost/fashion';

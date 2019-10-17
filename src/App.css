@@ -7,6 +7,11 @@ nav .container{
   text-align: right;
 }
 
+.dir-ltr {
+  direction: ltr;
+  text-align: left;
+}
+
 .form-check .form-check-label span.form-check-sign {
   float: right;
   right: -10px;
