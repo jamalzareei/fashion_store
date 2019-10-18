@@ -22,7 +22,7 @@ class Menu extends Component {
                             <span className="navbar-toggler-icon"></span>
                         </button>
                     </div>
-                    <div className="collapse navbar-collapse">
+                    <div className="collapse navbar-collapse show">
                         <ul className="navbar-nav mr-auto">
                             <li className="dropdown nav-item">
                                 <Link to="#"  className="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true">
@@ -46,6 +46,11 @@ class Menu extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/register">
                                     <i className="material-icons">cloud_download</i> ثبت نام
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/login">
+                                    <i className="material-icons">cloud_download</i> ورود
                                 </Link>
                             </li>
                         </ul>

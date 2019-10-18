@@ -35,9 +35,9 @@ class FormRegister extends Component {
                     errors: {},
                     statuses: {},
                 });
-                if(response.data.redirect.parametr){
-                    this.props.history.push('/confirm/'+response.data.redirect.parametr);
-                }else{
+                if (response.data.redirect.parametr) {
+                    this.props.history.push('/confirm/' + response.data.redirect.parametr);
+                } else {
                     console.log('');
                 }
             }, (errors) => {
@@ -60,7 +60,9 @@ class FormRegister extends Component {
         return (
             <div className="card card-signup m-0">
                 {/* <LoadingForm /> */}
-                {this.state.statuses.loadForm}
+                <div className="progress m-0">
+                    {this.state.statuses.loadForm}
+                </div>
                 <form className="form" method="post" action="/auth/register" onSubmit={this.handleSubmitRegister('auth/register')}>
                     <p className="description text-center">
                         <i className="fas fa-signature"></i>

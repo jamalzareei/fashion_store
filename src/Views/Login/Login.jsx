@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import FormConfirm from './Sections/FormConfirm';
+import FormLogin from './Sections/FormLogin';
 
 // let style= "background-image: url('../assets/img/bg7.jpg'); background-size: cover; background-position: top center;";
-export default class Confirm extends Component {
+export default class Login extends Component {
 
     // const imageUrl = require(`./../../Assets/img/login.jpg`);
     render() {
@@ -15,7 +15,7 @@ export default class Confirm extends Component {
                     <div className="container" >
                         <div className="row">
                             <div className="col-md-6 col-sm-8 ml-auto mr-auto">
-                                <FormConfirm />
+                                <FormLogin />
                             </div>
                         </div>
                     </div>

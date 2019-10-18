@@ -85,6 +85,8 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
         if ($token = $this->guard()->attempt($credentials)) {
+            $user = Auth::guard()->user();
+            
             Login::create([
                 'login_at' => Carbon::now()->toDateTimeString(),
                 'ip' => $request->getClientIp(),
@@ -93,7 +95,15 @@ class AuthController extends Controller
                 // 'longitute' => '',
                 'login_on' => 1,
             ]);
-            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'logined',
+                'redirect' => [
+                    'page' => 'home',
+                    'parametr' => '',
+                ],
+                'data' => $user,
+            ], 200)->header('Authorization', $token);
         }
         return response()->json(['error' => 'login_error'], 401);
     }
