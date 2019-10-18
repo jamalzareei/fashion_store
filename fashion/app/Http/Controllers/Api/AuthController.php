@@ -16,13 +16,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'registered',
-        //     'redirect' => 'confirm',
-        //     'data' => ['id'=>1],
-        // ], 200);
-        // return $request->all();
         $request->validate([
             'username' => 'required|unique:users',
             'password' => 'required|min:3|confirmed',
@@ -33,7 +26,6 @@ class AuthController extends Controller
             $user->phone = "0098" . ltrim($request->username, "0");
         }
         if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
-        // if (checkEmail($request->username)) {
             $user->email = $request->username;
         }
         $user->password = bcrypt($request->password);
@@ -47,7 +39,40 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'registered',
-            'redirect' => 'confirm',
+            'redirect' => [
+                'page' => 'confirm',
+                'parametr' => $user->uuid,
+            ],
+            'data' => $user,
+        ], 200);
+    }
+
+    public function confirm(Request $request)
+    {
+        // return $request->all();
+        $request->validate([
+            // 'uuid' => 'required|exists:users,uuid',
+            'code_confirm' => 'required|min:4',
+        ]);
+
+        $user = User::where('uuid', $request->uuid)->where('code_confirm', $request->code_confirm)->first();
+
+        if(!$user){
+            return response()->json([
+                'status' => 'error',
+                'errors' => ['code_confirm' => 'کد وارد شده اشتباه است.'],
+            ], 422);
+        }
+        $user->phone_verified_at = Carbon::now()->toDateTimeString();
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'confirmed',
+            'redirect' => [
+                'page' => 'login',
+                'parametr' => '',
+            ],
             'data' => $user,
         ], 200);
     }

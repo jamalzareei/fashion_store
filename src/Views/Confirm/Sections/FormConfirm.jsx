@@ -11,9 +11,10 @@ class FormConfirm extends Component {
 
         this.state = {
             errors: {},
-            statuses: {}
+            statuses: {},
         };
     }
+
 
     handleSubmitRegister = (url) => async (event) => {
 
@@ -26,6 +27,7 @@ class FormConfirm extends Component {
             }
         });
 
+
         await Axios({
             method: event.target.method,
             url: url,// 
@@ -36,10 +38,10 @@ class FormConfirm extends Component {
                     errors: {},
                     statuses: {},
                 });
-                if(response.data.data.uuid){
-                    this.props.history.push('/confirm/'+response.data.data.uuid);
+                if(response.data.redirect){
+                    this.props.history.push('/login');
                 }else{
-                    console.log(response.data.data.uuid);
+                    console.log('');
                 }
             }, (errors) => {
                 console.log(errors);
@@ -57,24 +59,27 @@ class FormConfirm extends Component {
             });
     }
     render() {
+
+        let uuid = this.props.match.params.uuid;
         return (
             <div className="card card-signup m-0 mt-5">
             {/* <LoadingForm /> */}
-                    {this.state.statuses.loadForm}
-                <form className="form" method="" action="auth/confirm" onSubmit={this.handleSubmitRegister.bind(this)}>
+                {this.state.statuses.loadForm}
+                <form className="form" method="post" action="auth/confirm" onSubmit={this.handleSubmitRegister('auth/confirm')}>
                     <p className="description text-center">
                         <i className="fas fa-signature"></i>
                     </p>
+                    <input type="hidden" className="form-control dir-ltr" id="uuid" name="uuid" value={uuid} />
                     <div className="card-body mb-2">
                         <div className="mb-1">
                             <h3 className="text-center m-0">تایید حساب کاربری</h3>
                         </div>
                         <div className="col-lg-12 col-sm-12"> 
-                            <div className={`form-group bmd-form-group ${this.state.errors.codeconfirm ? "has-danger" : "has-success"}`}>
-                                <label htmlFor="codeconfirm" className="bmd-label-floating">کد تاییدیه</label>
-                                <input type="text" className="form-control dir-ltr" id="codeconfirm" name="codeconfirm" />
-                                {this.state.statuses.iconcodeconfirm}
-                                <p className="text-right small text-log">{this.state.errors.codeconfirm}</p>
+                            <div className={`form-group bmd-form-group ${this.state.errors.code_confirm ? "has-danger" : "has-success"}`}>
+                                <label htmlFor="code_confirm" className="bmd-label-floating">کد تاییدیه</label>
+                                <input type="text" className="form-control dir-ltr" id="code_confirm" name="code_confirm" />
+                                {this.state.statuses.iconcode_confirm}
+                                <p className="text-right small text-log">{this.state.errors.code_confirm}</p>
                             </div>
                         </div>
                     </div>

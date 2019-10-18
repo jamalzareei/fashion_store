@@ -35,10 +35,10 @@ class FormRegister extends Component {
                     errors: {},
                     statuses: {},
                 });
-                if(response.data.data.uuid){
-                    this.props.history.push('/confirm/'+response.data.data.uuid);
+                if(response.data.redirect.parametr){
+                    this.props.history.push('/confirm/'+response.data.redirect.parametr);
                 }else{
-                    console.log(response.data.data.uuid);
+                    console.log('');
                 }
             }, (errors) => {
                 console.log(errors);
