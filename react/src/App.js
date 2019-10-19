@@ -5,13 +5,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import logo from './logo.svg';
 import './App.css';
 import Main from './Views/Main/Main';
-import Error404 from './Views/Error404';
 import Register from './Views/Auth/Register/Register';
 import Menu from './Componetns/Menu';
 import Confirm from './Views/Auth/Confirm/Confirm';
 import Login from './Views/Auth/Login/Login';
 import PasswordCreate from './Views/Auth/PasswordCreate/PasswordCreate';
 import PasswordReset from './Views/Auth/PasswordReset/PasswordReset';
+import Error404 from './Views/Errors/Error404';
 
 class App extends Component {
   render() {

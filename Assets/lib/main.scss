@@ -1,0 +1,95 @@
+$menuBg: #0099cc;
+$menuBg2: darken($menuBg, 10%);
+$menuColor: #fff;
+
+$menu2Bg: #fff;
+$menu2Bg2: #eee;
+$menu2Color: #222;
+$menu2Border: #ccc;
+
+.responsive-menu {
+	border-bottom: 2px solid $menuBg2;
+  flex-direction: row;
+  display: flex;
+  background-color: $menuBg;
+  //overflow: hidden;
+  // push outside the screen while calculating size of elements
+  &.hidden {
+    position: fixed;
+    top: -10000;
+  }
+}
+
+.menu-item {
+  display: block;
+	padding: 10px;
+	background-color: #ffffff;
+	color: #222;
+	text-decoration: none;
+  white-space: nowrap;
+  background-color: $menuBg;
+  color: $menuColor;
+  line-height: 1.5;
+}
+.menu-item.active {
+  background-color: $menuBg2;
+}
+.kebab-menu {
+  margin-left: auto;
+  position: relative;
+  &.hidden {
+    display: none;
+  }
+}
+
+.kebab-menu-button {
+  cursor: pointer;
+  display: block;
+  padding: 7px 7px;
+  &:hover, &:focus {
+    background-color: $menuBg2;
+  }
+}
+
+$dotWidth: 5px;
+
+.kebab-menu-button-dot {
+  display: block;
+  width: $dotWidth;
+  height: $dotWidth;
+  border-radius: 50%;
+  background: $menuColor;
+  margin: 3px 6px;
+}
+
+.kebab-menu-contents {
+  position: absolute;
+  right: 8px;
+  top: 60px;
+  border: 1px solid #ccc;
+  z-index: 2;
+  border: 1px solid $menu2Border;
+  border-radius: 3px;
+  &.hidden {
+    display: none;
+  }
+  & > .menu-item {
+    display: block;
+    background-color: $menu2Bg;
+    color: $menu2Color;
+
+    &:hover, &:focus {
+      background-color: $menu2Bg2;
+    }
+  }
+  $arrowWidth: 8px;
+  & .before {
+    border-width: $arrowWidth;
+    border-top-width: 0;
+    border-color: transparent transparent $menu2Bg;
+    position: absolute;
+    top: -$arrowWidth;
+    right: $arrowWidth;
+    border-style: solid;
+  }
+}
