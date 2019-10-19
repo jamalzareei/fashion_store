@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Axios from '../../../Axios';
-import { LoadingBtn, LoadingForm } from '../../../Componetns/Loading';
+import Axios from '../../../../Axios';
+import { LoadingBtn, LoadingForm } from '../../../../Componetns/Loading';
 
 
-class FormConfirm extends Component {
+class FormPasswordCreate extends Component {
 
     constructor(props) {
         super(props);
@@ -38,11 +38,11 @@ class FormConfirm extends Component {
                     errors: {},
                     statuses: {},
                 });
-                if (response.data.redirect) {
-                    this.props.history.push('/login');
-                } else {
-                    console.log('');
-                }
+                // if (response.data.redirect) {
+                //     this.props.history.push('/password/reset');
+                // } else {
+                //     console.log('');
+                // }
             }, (errors) => {
                 console.log(errors);
                 if (errors.response.data.errors) {
@@ -66,21 +66,21 @@ class FormConfirm extends Component {
                 <div className="progress m-0">
                     {this.state.statuses.loadForm}
                 </div>
-                <form className="form" method="post" action="auth/confirm" onSubmit={this.handleSubmitRegister('auth/confirm')}>
+                <form className="form" method="post" action="auth/password/create" onSubmit={this.handleSubmitRegister('auth/password/create')}>
                     <p className="description text-center">
                         <i className="fas fa-signature"></i>
                     </p>
                     <input type="hidden" className="form-control dir-ltr" id="uuid" name="uuid" value={uuid} />
                     <div className="card-body mb-2">
                         <div className="mb-1">
-                            <h3 className="text-center m-0">تایید حساب کاربری</h3>
+                            <h3 className="text-center m-0">درخواست لینک تغییر رمز عبور</h3>
                         </div>
                         <div className="col-lg-12 col-sm-12">
-                            <div className={`form-group bmd-form-group ${this.state.errors.code_confirm ? "has-danger" : "has-success"}`}>
-                                <label htmlFor="code_confirm" className="bmd-label-floating">کد تاییدیه</label>
-                                <input type="text" className="form-control dir-ltr" id="code_confirm" name="code_confirm" />
-                                {this.state.statuses.iconcode_confirm}
-                                <p className="text-right small text-log">{this.state.errors.code_confirm}</p>
+                            <div className={`form-group bmd-form-group ${this.state.errors.username ? "has-danger" : "has-success"}`}>
+                                <label htmlFor="username" className="bmd-label-floating">شماره تلفن</label>
+                                <input type="text" className="form-control dir-ltr" id="username" name="username" />
+                                {this.state.statuses.iconUsername}
+                                <p className="text-right small text-log">{this.state.errors.username}</p>
                             </div>
                         </div>
                     </div>
@@ -88,12 +88,12 @@ class FormConfirm extends Component {
                         <div className="row">
                             <div className="col text-left float-right">
                                 <button type="submit" className="btn btn-primary btn-wd btn-round">
-                                    تایید حساب کاربری
+                                    ارسال لینک فعال سازی
                                 </button>
                             </div>
                             <div className="col text-right float-right">
-                                <Link to="/login" className="btn btn-rose btn-link btn-wd btn-lg">
-                                    قبلا ثبت نام کرده اید؟
+                                <Link to="/register" className="btn btn-rose btn-link btn-wd btn-lg">
+                                    حساب کاربری ندارید؟
                                 </Link>
                             </div>
                         </div>
@@ -105,4 +105,4 @@ class FormConfirm extends Component {
     }
 }
 
-export default withRouter(FormConfirm);
+export default withRouter(FormPasswordCreate);

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import FormConfirm from './Sections/FormConfirm';
+import FormPasswordCreate from './Sections/FormPasswordCreate';
 
 // let style= "background-image: url('../assets/img/bg7.jpg'); background-size: cover; background-position: top center;";
-export default class Confirm extends Component {
+export default class PasswordCreate extends Component {
 
     // const imageUrl = require(`./../../Assets/img/login.jpg`);
     render() {
-        let ImageUrl = require('../../Assets/img/bg/9.jpg');
+        let ImageUrl = require('../../../Assets/img/bg/9.jpg');
         return (
             <div className="login-page">
                 {/* <Header /> */}
@@ -15,7 +15,7 @@ export default class Confirm extends Component {
                     <div className="container" >
                         <div className="row">
                             <div className="col-md-6 col-sm-8 ml-auto mr-auto">
-                                <FormConfirm />
+                                <FormPasswordCreate />
                             </div>
                         </div>
                     </div>

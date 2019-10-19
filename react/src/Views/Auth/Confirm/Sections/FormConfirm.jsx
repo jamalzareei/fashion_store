@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Axios from '../../../Axios';
-import { LoadingBtn, LoadingForm } from '../../../Componetns/Loading';
+import Axios from '../../../../Axios';
+import { LoadingBtn, LoadingForm } from '../../../../Componetns/Loading';
 
-class FormLogin extends Component {
+
+class FormConfirm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             errors: {},
-            statuses: {}
+            statuses: {},
         };
     }
 
-    handleSubmitLogin = (url) => async (event) => {
+
+    handleSubmitRegister = (url) => async (event) => {
 
         event.preventDefault();
 
@@ -24,6 +26,7 @@ class FormLogin extends Component {
                 loadForm: <LoadingForm />
             }
         });
+
 
         await Axios({
             method: event.target.method,
@@ -35,8 +38,8 @@ class FormLogin extends Component {
                     errors: {},
                     statuses: {},
                 });
-                if (response.data.redirect.parametr) {
-                    this.props.history.push('/');
+                if (response.data.redirect) {
+                    this.props.history.push('/login');
                 } else {
                     console.log('');
                 }
@@ -55,48 +58,42 @@ class FormLogin extends Component {
                 console.log(error);
             });
     }
-
     render() {
+
+        let uuid = this.props.match.params.uuid;
         return (
-            <div className="card card-signup m-0 mt-4">
-                {/* <LoadingForm /> */}
+            <div className="card card-signup m-0 mt-5">
                 <div className="progress m-0">
                     {this.state.statuses.loadForm}
                 </div>
-                <form className="form" method="post" action="/auth/login" onSubmit={this.handleSubmitLogin('auth/login')}>
+                <form className="form" method="post" action="auth/confirm" onSubmit={this.handleSubmitRegister('auth/confirm')}>
                     <p className="description text-center">
                         <i className="fas fa-signature"></i>
                     </p>
+                    <input type="hidden" className="form-control dir-ltr" id="uuid" name="uuid" value={uuid} />
                     <div className="card-body mb-2">
                         <div className="mb-1">
-                            <h3 className="text-center m-0">ورود به حساب کاربری</h3>
+                            <h3 className="text-center m-0">تایید حساب کاربری</h3>
                         </div>
                         <div className="col-lg-12 col-sm-12">
-                            <div className={`form-group bmd-form-group ${this.state.errors.username ? "has-danger" : "has-success"}`}>
-                                <label htmlFor="username" className="bmd-label-floating">شماره تلفن</label>
-                                <input type="text" className="form-control dir-ltr" id="username" name="username" />
-                                <p className="text-right small text-log">{this.state.errors.username}</p>
+                            <div className={`form-group bmd-form-group ${this.state.errors.code_confirm ? "has-danger" : "has-success"}`}>
+                                <label htmlFor="code_confirm" className="bmd-label-floating">کد تاییدیه</label>
+                                <input type="text" className="form-control dir-ltr" id="code_confirm" name="code_confirm" />
+                                {this.state.statuses.iconcode_confirm}
+                                <p className="text-right small text-log">{this.state.errors.code_confirm}</p>
                             </div>
                         </div>
-                        <div className="col-lg-12 col-sm-12">
-                            <div className={`form-group bmd-form-group ${this.state.errors.password ? "has-danger" : "has-success"}`}>
-                                <label htmlFor="password" className="bmd-label-floating">رمز عبور</label>
-                                <input type="password" className="form-control dir-ltr" id="password" name="password" />
-                                <p className="text-right small text-log">{this.state.errors.password}</p>
-                            </div>
-                        </div>
-
                     </div>
                     <div className="col mb-2">
                         <div className="row">
                             <div className="col text-left float-right">
-                                <button href="#pablo" className="btn btn-primary btn-wd btn-round">
-                                    ورود به حساب کاربری
+                                <button type="submit" className="btn btn-primary btn-wd btn-round">
+                                    تایید حساب کاربری
                                 </button>
                             </div>
                             <div className="col text-right float-right">
-                                <Link to="/register" className="btn btn-rose btn-link btn-wd btn-lg">
-                                    حساب کاربری ندارید؟
+                                <Link to="/login" className="btn btn-rose btn-link btn-wd btn-lg">
+                                    قبلا ثبت نام کرده اید؟
                                 </Link>
                             </div>
                         </div>
@@ -108,4 +105,4 @@ class FormLogin extends Component {
     }
 }
 
-export default withRouter(FormLogin);
+export default withRouter(FormConfirm);

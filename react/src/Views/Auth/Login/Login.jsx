@@ -6,7 +6,7 @@ export default class Login extends Component {
 
     // const imageUrl = require(`./../../Assets/img/login.jpg`);
     render() {
-        let ImageUrl = require('../../Assets/img/bg/9.jpg');
+        let ImageUrl = require('../../../Assets/img/bg/9.jpg');
         return (
             <div className="login-page">
                 {/* <Header /> */}

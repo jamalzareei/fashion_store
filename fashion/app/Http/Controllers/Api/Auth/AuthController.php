@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,20 +20,35 @@ class AuthController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required|min:3|confirmed',
         ]);
+        $username =  "0098" . ltrim($request->username, "0");
+        if(User::where('username', $username)->first()){
+            return response()->json([
+                'status' => 'error',
+                'errors' => ['username' => 'شماره تلقن قبلا ثبت شده است.'],
+            ], 422);
+        }
         $user = new User;
-        $user->username = $request->username;
-        if (is_numeric($request->username) && ctype_digit($request->username)) {
-            $user->phone = "0098" . ltrim($request->username, "0");
+        if (is_numeric($username) && ctype_digit($username)) {
+            $user->phone =$username;
+        }elseif (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $user->email = $username;
         }
-        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
-            $user->email = $request->username;
-        }
+        $user->username = $username;
         $user->password = bcrypt($request->password);
         $user->uuid = (string) Str::uuid();
         $user->code_confirm = rand(1001,9999);
         $user->save();
 
-        $role_id = Role::where('slug', 'USER')->first()->id;
+        $role = Role::where('slug', 'USER')->first();
+        if(!$role){
+            $role = new Role;
+            $role->slug = 'USER';
+            $role->name = 'user';
+            $role->save();
+            $role = Role::where('slug', 'USER')->first();
+
+        }
+        $role_id = $role->id;
         $user->roles()->sync([$role_id]);
 
         return response()->json([
@@ -81,13 +96,14 @@ class AuthController extends Controller
     {
         $credentials = $request->only('username', 'password');
         $credentials = [
-            'username' => (is_numeric($request->username)) ? '0098' . $request->username : $request->username,
+            'username' => (is_numeric($request->username)) ? '0098' . ltrim($request->username, "0") : $request->username,
             'password' => $request->password,
         ];
         if ($token = $this->guard()->attempt($credentials)) {
             $user = Auth::guard()->user();
             
             Login::create([
+                'user_id' => $user->id,
                 'login_at' => Carbon::now()->toDateTimeString(),
                 'ip' => $request->getClientIp(),
                 'user_agent' => request()->header('User-Agent'),
@@ -105,6 +121,10 @@ class AuthController extends Controller
                 'data' => $user,
             ], 200)->header('Authorization', $token);
         }
+        return response()->json([
+            'status' => 'error',
+            'errors' => ['username' => 'شماره با رمز مطابقت ندارد.'],
+        ], 422);
         return response()->json(['error' => 'login_error'], 401);
     }
 

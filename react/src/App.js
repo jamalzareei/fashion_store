@@ -6,10 +6,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 import Main from './Views/Main/Main';
 import Error404 from './Views/Error404';
-import Register from './Views/Register/Register';
+import Register from './Views/Auth/Register/Register';
 import Menu from './Componetns/Menu';
-import Confirm from './Views/Confirm/Confirm';
-import Login from './Views/Login/Login';
+import Confirm from './Views/Auth/Confirm/Confirm';
+import Login from './Views/Auth/Login/Login';
+import PasswordCreate from './Views/Auth/PasswordCreate/PasswordCreate';
+import PasswordReset from './Views/Auth/PasswordReset/PasswordReset';
 
 class App extends Component {
   render() {
@@ -25,6 +27,8 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm/:uuid" component={Confirm} />
               <Route path="/login" component={Login} />
+              <Route path="/password/create" component={PasswordCreate} />
+              <Route path="/password/reset/:token" component={PasswordReset} />
 
 
               <Route component={Error404} />
