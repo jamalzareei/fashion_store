@@ -37,4 +37,21 @@ const iconStatusClear = () => (
     </span>
 );
 
-export { Success, LoadingBtn, Error, Again, DefaultWait, LoadingForm, iconStatusDone, iconStatusClear };
+const RequestCodeLink = () => (
+    <a href="/request-code" className=" btn-link btn-wd">
+        درخواست کد فعال سازی
+    </a>
+);
+
+
+export { 
+    Success, 
+    LoadingBtn, 
+    Error, 
+    Again, 
+    DefaultWait, 
+    LoadingForm, 
+    iconStatusDone, 
+    iconStatusClear, 
+    RequestCodeLink 
+};

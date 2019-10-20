@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Axios from '../../../../Axios';
-import { LoadingBtn, LoadingForm, RequestCodeLink } from '../../../../Componetns/Loading';
+import { LoadingBtn, LoadingForm } from '../../../../Componetns/Loading';
 
-class FormLogin extends Component {
+
+class FormRequestCode extends Component {
 
     constructor(props) {
         super(props);
@@ -11,11 +12,11 @@ class FormLogin extends Component {
         this.state = {
             errors: {},
             statuses: {},
-            requestCode: null
         };
     }
 
-    handleSubmitLogin = (url) => async (event) => {
+
+    handleSubmitRegister = (url) => async (event) => {
 
         event.preventDefault();
 
@@ -25,6 +26,7 @@ class FormLogin extends Component {
                 loadForm: <LoadingForm />
             }
         });
+
 
         await Axios({
             method: event.target.method,
@@ -36,31 +38,16 @@ class FormLogin extends Component {
                     errors: {},
                     statuses: {},
                 });
-                let appState = {
-                    isLoggedIn: true,
-                    user: response.data.data.user,
-                    timestamp: new Date().toString()
-                  };
-                localStorage["appState"] = JSON.stringify(appState);
-                this.setState({
-                    isLoggedIn: appState.isLoggedIn,
-                    user: appState.user
-                });
-                if (response.data.redirect) {
-                    this.props.history.push('/');
+                if (response.data.redirect.parametr) {
+                    this.props.history.push('/confirm/' + response.data.redirect.parametr);
                 } else {
                     console.log('');
                 }
             }, (errors) => {
-                console.log(errors.response);
-                let requestCode = '';
-                if(errors.response.status == 405){
-                    requestCode = <RequestCodeLink />;
-                }
+                console.log(errors);
                 if (errors.response.data.errors) {
                     this.setState({
                         errors: errors.response.data.errors,
-                        requestCode: requestCode
                     })
                 }
                 this.setState({
@@ -71,46 +58,36 @@ class FormLogin extends Component {
                 console.log(error);
             });
     }
-
     render() {
+
+        let username = (this.props.match.params) ? this.props.match.params.username : '';
         return (
-            <div className="card card-signup m-0 mt-4">
-                {/* <LoadingForm /> */}
+            <div className="card card-signup m-0 mt-5">
                 <div className="progress m-0">
                     {this.state.statuses.loadForm}
                 </div>
-                <form className="form" method="post" action="/auth/login" onSubmit={this.handleSubmitLogin('auth/login')}>
+                <form className="form" method="post" action="auth/request-code" onSubmit={this.handleSubmitRegister('auth/request-code')}>
                     <p className="description text-center">
                         <i className="fas fa-signature"></i>
                     </p>
                     <div className="card-body mb-2">
                         <div className="mb-1">
-                            <h3 className="text-center m-0">ورود به حساب کاربری</h3>
+                            <h3 className="text-center m-0">درخواست کد فعال سازی</h3>
                         </div>
                         <div className="col-lg-12 col-sm-12">
                             <div className={`form-group bmd-form-group ${this.state.errors.username ? "has-danger" : "has-success"}`}>
                                 <label htmlFor="username" className="bmd-label-floating">شماره تلفن</label>
-                                <input type="text" className="form-control dir-ltr" id="username" name="username" />
-                                <p className="text-right small text-log">{this.state.errors.username} {this.state.requestCode}</p>
+                                <input type="text" className="form-control dir-ltr" id="username" name="username" value={username} />
+                                {this.state.statuses.iconUsername}
+                                <p className="text-right small text-log">{this.state.errors.username}</p>
                             </div>
                         </div>
-                        <div className="col-lg-12 col-sm-12">
-                            <div className={`form-group bmd-form-group ${this.state.errors.password ? "has-danger" : "has-success"}`}>
-                                <label htmlFor="password" className="bmd-label-floating">رمز عبور</label>
-                                <input type="password" className="form-control dir-ltr" id="password" name="password" />
-                                <p className="text-right small text-log">{this.state.errors.password}</p>
-                            </div>
-                            <Link to="/password/create" className=" btn-link btn-wd">
-                                فراموشی رمز عبور
-                            </Link>
-                        </div>
-
                     </div>
                     <div className="col mb-2">
                         <div className="row">
                             <div className="col text-left float-right">
                                 <button type="submit" className="btn btn-primary btn-wd btn-round">
-                                    ورود به حساب کاربری
+                                    ارسال کد فعال سازی
                                 </button>
                             </div>
                             <div className="col text-right float-right">
@@ -127,4 +104,4 @@ class FormLogin extends Component {
     }
 }
 
-export default withRouter(FormLogin);
+export default withRouter(FormRequestCode);

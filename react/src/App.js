@@ -12,6 +12,7 @@ import Login from './Views/Auth/Login/Login';
 import PasswordCreate from './Views/Auth/PasswordCreate/PasswordCreate';
 import PasswordReset from './Views/Auth/PasswordReset/PasswordReset';
 import Error404 from './Views/Errors/Error404';
+import RequestCode from './Views/Auth/RequestCode/RequestCode';
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm/:uuid" component={Confirm} />
               <Route path="/login" component={Login} />
+              <Route path="/request-code" component={RequestCode} />
               <Route path="/password/create" component={PasswordCreate} />
               <Route path="/password/reset/:token" component={PasswordReset} />
 

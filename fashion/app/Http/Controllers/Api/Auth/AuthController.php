@@ -92,6 +92,38 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function requestCode(Request $request){
+        // $request->validate([
+        //     'username' => 'required|exists:users'
+        // ]);
+        $username = (is_numeric($request->username)) ? '0098' . ltrim($request->username, "0") : $request->username;
+        $user = User::where('username', $username)->first();
+
+        if(!$user){
+            return response()->json([
+                'status' => 'error',
+                'errors' => ['username' => 'کاربر مورد نظر وجود ندارد.'],
+            ], 422);
+        }
+
+        $user->code_confirm = rand(1001,9999);
+
+        // send sms code confirm
+
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'send confirm code',
+            'redirect' => [
+                'page' => 'confirm',
+                'parametr' => $user->uuid,
+            ],
+            'data' => $user,
+        ], 200);
+    }
+
+
     public function login(Request $request)
     {
         $credentials = $request->only('username', 'password');
@@ -99,6 +131,21 @@ class AuthController extends Controller
             'username' => (is_numeric($request->username)) ? '0098' . ltrim($request->username, "0") : $request->username,
             'password' => $request->password,
         ];
+        $user = User::where('username', $credentials['username'])->first();
+        if(!$user){
+            return response()->json([
+                'status' => 'error',
+                'errors' => ['username' => 'کاربر مورد نظر وجود ندارد.'],
+            ], 422);
+        }
+
+        if($user->email_verified_at == null && $user->phone_verified_at == null){
+            return response()->json([
+                'status' => 'error',
+                'errors' => ['username' => 'حساب کاربری شما فعال نشده است.'],
+            ], 405);
+        }
+
         if ($token = $this->guard()->attempt($credentials)) {
             $user = Auth::guard()->user();
             

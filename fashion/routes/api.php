@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('auth')->namespace('Auth')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('confirm', 'AuthController@confirm');
+    Route::post('request-code', 'AuthController@requestCode');
     Route::post('login', 'AuthController@login');
     Route::get('refresh', 'AuthController@refresh');
 
