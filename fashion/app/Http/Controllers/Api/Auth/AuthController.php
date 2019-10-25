@@ -166,6 +166,7 @@ class AuthController extends Controller
                     'parametr' => '',
                 ],
                 'data' => $user,
+                'token' => $token
             ], 200)->header('Authorization', $token);
         }
         return response()->json([
