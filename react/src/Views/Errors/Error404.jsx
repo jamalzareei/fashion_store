@@ -5,11 +5,13 @@ class Error404 extends Component {
         window.scroll(0, 0);
     }
     render() {
+        //C:\laragon\www\react\src\Assets\img\404.png
+        const imageUrl = require(`./../../Assets/img/404.png`);
         return (
-                <div className="transition-item detail-page" style={{ marginTop: '100px' }}>
+                <div className="transition-item detail-page" style={{ margin: '100px auto',textAlign: 'center' }}>
                     {/* <Header />
                     <LoadBefore /> */}
-                    <h1>not Found</h1>
+                    <img src={imageUrl} style={{ 'maxHeight': '500px','maxWidth': '100%' }} alt="error page" />
                 </div>
         );
     }

@@ -2,7 +2,7 @@ import React from "react";
 
 // set the defaults
 const AuthContext = React.createContext({
-  token: (localStorage.getItem("token") !== null) ? localStorage.getItem("token") : null,
+  token: (localStorage.getItem("token_") !== null) ? localStorage.getItem("token_") : null,
   setToken: () => {}
 });
 

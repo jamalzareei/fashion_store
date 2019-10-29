@@ -45,7 +45,8 @@ class FormLogin extends Component {
                     user: response.data.data,
                     timestamp: new Date().toString()
                 };
-                localStorage["token"] = (response.data.token);
+                localStorage.setItem("token_", response.data.token);
+                localStorage.setItem("user", response.data.data);
                 this.setState({
                     isLoggedIn: appState.isLoggedIn,
                     user: appState.user,

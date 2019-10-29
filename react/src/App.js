@@ -14,7 +14,7 @@ class App extends Component {
   };
   
   state = {
-    token: (localStorage.getItem("token") !== null) ? localStorage.getItem("token") : null,
+    token: (localStorage.getItem("token_") !== null) ? localStorage.getItem("token_") : null,
     setToken: this.setToken
   };
 

@@ -33,6 +33,9 @@ Route::prefix('auth')->namespace('Auth')->group(function () {
     Route::group(['middleware' => 'auth:api'], function(){
         Route::get('user', 'AuthController@user');
         Route::post('logout', 'AuthController@logout');
+
+        Route::get('profile', 'UserController@getUser');
+        Route::post('profile', 'UserController@updateUser');
     });
 });
 
