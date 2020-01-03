@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "^7.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "axios": "^0.19.0",
@@ -10,6 +11,7 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-fontawesome": "^1.6.1",
+    "react-helmet": "^5.2.1",
     "react-owl-carousel": "^2.3.1",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",

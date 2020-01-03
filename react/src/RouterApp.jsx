@@ -11,14 +11,19 @@ import PasswordReset from './Views/Auth/PasswordReset/PasswordReset';
 import Error404 from './Views/Errors/Error404';
 import RequestCode from './Views/Auth/RequestCode/RequestCode';
 import { AuthConsumer } from './Contexts/AuthContext';
+import Dashboard from './Views/Panel/Dashboard/Dashboard';
+import Profile from './Views/Panel/User/Profile';
 
 export default class RouterApp extends Component {
   render() {
+    let patname = window.location.pathname;
     return (
       <AuthConsumer>
         {({ token, setToken }) => (
           <Router>
+            {(patname.search("panel") < 0) &&
             <Menu />
+            }
             <div>
               <Switch>
                 <Route exact path="/" component={Main} />
@@ -29,6 +34,14 @@ export default class RouterApp extends Component {
                 <Route path="/request-code" component={RequestCode} />
                 <Route path="/password/create" component={PasswordCreate} />
                 <Route path="/password/reset/:token" component={PasswordReset} />
+
+
+                <Route path="/panel/dashboard"  render={() => ( (token) ? (<Dashboard />) : (<Redirect to="/login" />) )} />
+                
+                <Route path="/panel/profile"  render={() => ( (token) ? (<Profile />) : (<Redirect to="/login" />) )} />
+
+                {/* <Route path="/panel/dashboard" component={Dashboard} />
+                <Route path="/panel/profile" component={Profile} /> */}
 
 
                 <Route component={Error404} />

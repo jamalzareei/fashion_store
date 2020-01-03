@@ -11,7 +11,7 @@ class Error404 extends Component {
                 <div className="transition-item detail-page" style={{ margin: '100px auto',textAlign: 'center' }}>
                     {/* <Header />
                     <LoadBefore /> */}
-                    <img src={imageUrl} style={{ 'maxHeight': '500px','maxWidth': '100%' }} alt="error page" />
+                    <img src={imageUrl} style={{ 'maxHeight': '400px','maxWidth': '100%' }} alt="error page" />
                 </div>
         );
     }

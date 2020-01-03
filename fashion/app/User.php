@@ -53,4 +53,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');
     }
+
+    public function image()
+    {
+        return $this->morphMany('App\Models\Image', 'imageable');
+    }
 }

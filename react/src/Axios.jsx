@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { urlBase } from './Helper';
 
-let token = '';
-if (localStorage.getItem('login') !== '') {
-    token = localStorage.getItem('login');
-}
+let token = (localStorage.getItem("token_") !== null) ? localStorage.getItem("token_") : null;
+
+
 export default axios.create({
     baseURL: urlBase+`/api/v1/`,
 

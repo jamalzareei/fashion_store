@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Login;
 use App\Models\Role;
+use App\Services\kavenegarService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class AuthController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required|min:3|confirmed',
         ]);
-        $username =  "0098" . ltrim($request->username, "0");
+        $username =  "+98" . ltrim($request->username, "0");
         if(User::where('username', $username)->first()){
             return response()->json([
                 'status' => 'error',
@@ -28,16 +29,22 @@ class AuthController extends Controller
             ], 422);
         }
         $user = new User;
-        if (is_numeric($username) && ctype_digit($username)) {
+        $user->username = $username;
+        $user->password = bcrypt($request->password);
+        $user->code_country = '+98';
+        $user->uuid = (string) Str::uuid();
+        $code_confirm = rand(1001,9999);
+        $user->code_confirm = $code_confirm;
+        
+        if (is_numeric($request->username) && ctype_digit($request->username)) {
             $user->phone =$username;
+            kavenegarService::send($username,$code_confirm);
         }elseif (filter_var($username, FILTER_VALIDATE_EMAIL)) {
             $user->email = $username;
         }
-        $user->username = $username;
-        $user->password = bcrypt($request->password);
-        $user->uuid = (string) Str::uuid();
-        $user->code_confirm = rand(1001,9999);
         $user->save();
+
+        
 
         $role = Role::where('slug', 'USER')->first();
         if(!$role){
@@ -79,6 +86,7 @@ class AuthController extends Controller
             ], 422);
         }
         $user->phone_verified_at = Carbon::now()->toDateTimeString();
+        $user->code_confirm = '';
         $user->save();
 
         return response()->json([
@@ -96,7 +104,7 @@ class AuthController extends Controller
         // $request->validate([
         //     'username' => 'required|exists:users'
         // ]);
-        $username = (is_numeric($request->username)) ? '0098' . ltrim($request->username, "0") : $request->username;
+        $username = (is_numeric($request->username)) ? '+98' . ltrim($request->username, "0") : $request->username;
         $user = User::where('username', $username)->first();
 
         if(!$user){
@@ -106,8 +114,14 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $user->code_confirm = rand(1001,9999);
+        $code_confirm = rand(1001,9999);
+        $user->code_confirm = $code_confirm;
 
+        if((is_numeric($request->username))){
+            kavenegarService::send($username,$code_confirm);
+        }else{
+
+        }
         // send sms code confirm
 
         $user->save();
@@ -128,7 +142,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('username', 'password');
         $credentials = [
-            'username' => (is_numeric($request->username)) ? '0098' . ltrim($request->username, "0") : $request->username,
+            'username' => (is_numeric($request->username)) ? '+98' . ltrim($request->username, "0") : $request->username,
             'password' => $request->password,
         ];
         $user = User::where('username', $credentials['username'])->first();
@@ -178,6 +192,9 @@ class AuthController extends Controller
 
     public function logout()
     {
+        Login::where('user_id' , Auth::user()->id)->update([
+            'login_on' => 0,
+        ]);
         $this->guard()->logout();
         return response()->json([
             'status' => 'success',
@@ -188,6 +205,14 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         $user = User::find(Auth::user()->id);
+        $login = Login::where('user_id',$user->id)->where('ip', $request->getClientIp())->first();
+        if(!$login->login_on){
+            $this->guard()->logout();
+            return response()->json([
+                'status' => 'error',
+                'data' => '',
+            ]);
+        }
         return response()->json([
             'status' => 'success',
             'data' => $user,
@@ -198,7 +223,7 @@ class AuthController extends Controller
     {
         if ($token = $this->guard()->refresh()) {
             return response()
-                ->json(['status' => 'successs'], 200)
+                ->json(['status' => 'successs', 'token' => $token], 200)
                 ->header('Authorization', $token);
         }
         return response()->json(['error' => 'refresh_token_error'], 401);

@@ -42,7 +42,7 @@ label.form-check-label {
 }
 
 .login-page .page-header .container {
-  padding-top: 15vh;
+  padding-top: 0;
 }
 
 /* loading */
@@ -104,6 +104,13 @@ label.form-check-label {
     box-shadow: 0 2.5em 0 0;
   }
 }
+.progress{
+  height: 5px !important;
+  
+  /* background: none;
+  box-shadow: none; */
+  direction: ltr;
+}
 
 .progress .progress-bar {
   -webkit-animation-fill-mode: both;
@@ -127,3 +134,7 @@ label.form-check-label {
   }
 }
 /* loading */
+nav.navbar.navbar-expand-lg.navbar-transparent.navbar-absolute.fixed-top.menu-panel{
+  background: #fff !important;
+  color: black;
+}

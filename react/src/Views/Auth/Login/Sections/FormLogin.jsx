@@ -14,7 +14,7 @@ class FormLogin extends Component {
             statuses: {},
             requestCode: null,
             user: {},
-            token : (localStorage.getItem("token") !== null) ? localStorage.getItem("token") : null
+            token : (localStorage.getItem("token_") !== null) ? localStorage.getItem("token_") : null
         };
     }
 
@@ -84,7 +84,6 @@ class FormLogin extends Component {
                 <AuthConsumer>
                 {({ token, setToken }) => (
                     <div>
-                        {console.log(this.state.token)}
                         {setToken(this.state.token)}
                         {this.props.history.push('/')}
                     </div>
@@ -95,9 +94,9 @@ class FormLogin extends Component {
         return (
                     <div className="card card-signup m-0 mt-4">
                         {/* <LoadingForm /> */}
-                        <div className="progress m-0">
+                        
                             {this.state.statuses.loadForm}
-                        </div>
+                        
                         <form className="form" method="post" action="/auth/login" onSubmit={this.handleSubmitLogin('auth/login')}>
                             <p className="description text-center">
                                 <i className="fas fa-signature"></i>

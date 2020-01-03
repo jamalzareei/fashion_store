@@ -5,7 +5,9 @@ const LoadingBtn = () => (
 );
 
 const LoadingForm = () => (
-    <div className="progress-bar progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{ width:'100%' }}></div>
+    <div className="progress m-0">
+        <div className="progress-bar progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{ width:'100%' }}></div>
+    </div>
 );
 
 const Success = () => (

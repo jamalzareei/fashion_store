@@ -1,23 +1,33 @@
 {
   "files": {
-    "main.css": "/static/css/main.3398a4b2.chunk.css",
-    "main.js": "/static/js/main.baa438bf.chunk.js",
-    "main.js.map": "/static/js/main.baa438bf.chunk.js.map",
+    "main.css": "/static/css/main.ce5b54e7.chunk.css",
+    "main.js": "/static/js/main.5c221ed7.chunk.js",
+    "main.js.map": "/static/js/main.5c221ed7.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.25e016a4.js",
     "runtime-main.js.map": "/static/js/runtime-main.25e016a4.js.map",
-    "static/js/2.e97e19f6.chunk.js": "/static/js/2.e97e19f6.chunk.js",
-    "static/js/2.e97e19f6.chunk.js.map": "/static/js/2.e97e19f6.chunk.js.map",
+    "static/css/2.16aca965.chunk.css": "/static/css/2.16aca965.chunk.css",
+    "static/js/2.5aeb0028.chunk.js": "/static/js/2.5aeb0028.chunk.js",
+    "static/js/2.5aeb0028.chunk.js.map": "/static/js/2.5aeb0028.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.92d2adca7d6a571627497002c4c13ecc.js": "/precache-manifest.92d2adca7d6a571627497002c4c13ecc.js",
+    "precache-manifest.d240593b83d0f9fe7c1924eae25c760e.js": "/precache-manifest.d240593b83d0f9fe7c1924eae25c760e.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.3398a4b2.chunk.css.map": "/static/css/main.3398a4b2.chunk.css.map",
+    "static/css/2.16aca965.chunk.css.map": "/static/css/2.16aca965.chunk.css.map",
+    "static/css/main.ce5b54e7.chunk.css.map": "/static/css/main.ce5b54e7.chunk.css.map",
+    "static/media/404.png": "/static/media/404.2122c76c.png",
     "static/media/9.jpg": "/static/media/9.89836bd1.jpg",
-    "static/media/material-kit.css?v=2.1.1": "/static/media/arrow-right.ef69e791.cur"
+    "static/media/material-kit.css?v=2.1.1": "/static/media/arrow-right.ef69e791.cur",
+    "static/media/avatar.jpg": "/static/media/avatar.cc93a967.jpg",
+    "static/media/bg.jpg": "/static/media/bg.7f7796d8.jpg",
+    "static/media/iphone2.png": "/static/media/iphone2.faa74fc7.png",
+    "static/media/product.jpg": "/static/media/product.369298a4.jpg",
+    "static/media/vip.jpg": "/static/media/vip.cdb05aa3.jpg",
+    "static/media/vip1.jpg": "/static/media/vip1.4554b63d.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.25e016a4.js",
-    "static/js/2.e97e19f6.chunk.js",
-    "static/css/main.3398a4b2.chunk.css",
-    "static/js/main.baa438bf.chunk.js"
+    "static/css/2.16aca965.chunk.css",
+    "static/js/2.5aeb0028.chunk.js",
+    "static/css/main.ce5b54e7.chunk.css",
+    "static/js/main.5c221ed7.chunk.js"
   ]
 }
