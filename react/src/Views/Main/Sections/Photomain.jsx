@@ -18,7 +18,7 @@ class Photomain extends Component {
             <div>
                 <div className="page-header header-filter clear-filter" data-parallax="true" style={{ backgroundImage: `url(${imageUrl})`,height: '85vh' }}>
                     <div className="container">
-                        <div className="col">
+                        <div className="col mt-5 pt-5 mx-auto">
                             <h1>بوتیک ایران</h1>
                             <p className="dir">
                                 انتخاب از بین 15001 کالا از 502 فروشنده

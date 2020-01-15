@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext, useReducer } from 'react';
 import "@babel/polyfill";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -10,50 +10,30 @@ import RouterApp from './RouterApp';
 import { AuthProvider } from './Contexts/AuthContext';
 import Axios from './Axios';
 
-class App extends Component {
+//  const authContext = useContext();
 
-  setToken = token => {
-    if(token === null){
-      Axios.post(`auth/logout`)
-      .then(res => {
-        this.setState({ token });
-        localStorage.removeItem('token_');
-      })
-    }else{
-      this.setState({ token });
+
+  const initialValeue = 0;
+  const reducer = (state , action) => {
+    switch (action) {
+      case 'LOGIN':
+        return 
+      default:
+        return state
     }
-  };
-  
-
-  state = {
-    token: (localStorage.getItem("token_") !== null) ? localStorage.getItem("token_") : null,
-    setToken: this.setToken
-  };
-
-
-  componentDidMount(){
-    // if(localStorage.getItem("token_") !== null){
-    //   let token = localStorage.getItem("token_");
-    //   Axios.get(`auth/refresh?token=`+token)
-    //   .then(response => {
-    //     token = response.data.token;
-    //     this.setState({ token });
-    //     localStorage.setItem("token_", token);
-    //   })
-    // }
   }
+function App(){
 
-
-  render() {
+  const [token, dispatch] = useReducer(reducer, initialValeue)
 
     return (
-      <AuthProvider value={this.state}>
+      <AuthProvider value={{ token: token, setToken: dispatch }}>
           <div className="App">
             <RouterApp />
           </div >
       </AuthProvider>
     );
-  }
+    
 }
 
 export default App;

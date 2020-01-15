@@ -205,8 +205,9 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         $user = User::find(Auth::user()->id);
+        // return $user;
         $login = Login::where('user_id',$user->id)->where('ip', $request->getClientIp())->first();
-        if(!$login->login_on){
+        if(!$user || !$login || !$login->login_on){
             $this->guard()->logout();
             return response()->json([
                 'status' => 'error',

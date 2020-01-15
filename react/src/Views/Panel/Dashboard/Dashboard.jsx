@@ -6,6 +6,7 @@ import "../../../Assets/dashboard/css/material-dashboard-rtl.css?v=1.1";
 import MenuPanel from '../../../Componetns/MenuPanel';
 import FooterPanel from '../../../Componetns/FooterPanel';
 import SidebarPanel from '../../../Componetns/SidebarPanel';
+import Menu from '../../../Componetns/Menu';
 
 export default class Dashboard extends Component {
     render() {
@@ -13,7 +14,7 @@ export default class Dashboard extends Component {
             <div className="wrapper ">
                 <SidebarPanel />
                 <div className="main-panel">
-                    <MenuPanel />
+                    <Menu />
                     <div className="content">
                         <div className="container-fluid">
                             

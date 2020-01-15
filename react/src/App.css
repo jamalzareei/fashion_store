@@ -138,3 +138,50 @@ nav.navbar.navbar-expand-lg.navbar-transparent.navbar-absolute.fixed-top.menu-pa
   background: #fff !important;
   color: black;
 }
+nav .nav-pills .nav-item i {
+  font-size: 25px;
+  padding: 0;
+  width: 25px;
+  margin: 0 0 0 10px;
+  float: right;
+}
+
+nav li a {
+  height: 45px;
+}
+
+nav #cart, ul.user-login li a{
+  min-width: 30px !important;
+}
+
+nav.navbar-transparent *{
+  color: #fff;
+}
+
+nav:not(".navbar-transparent") *{
+  color: #fff;
+}
+
+@media (max-width: 830px){
+  nav .nav-pills .nav-item .nav-link{
+    min-width: 30px;
+    padding: 5px;
+  }
+  nav{
+    direction: ltr;
+  }
+  nav ul.nav.nav-pills.nav-pills-rose, nav .navbar-wrapper{
+    direction: rtl;
+  }
+  ul.nav.nav-pills.nav-pills-rose.user-login {
+    padding-top: 10px;
+  }
+}
+/* button.navbar-toggler{
+  display: block;
+} */
+.navbar .dropdown-item:hover, .navbar .dropdown-item:focus {
+  box-shadow: none !important;
+  background-color: transparent !important;
+  color: #fff !important;
+}

@@ -6,6 +6,7 @@ import FooterPanel from '../../../Componetns/FooterPanel';
 import SidebarPanel from '../../../Componetns/SidebarPanel';
 import Axios from '../../../Axios';
 import { LoadingBtn, LoadingForm } from '../../../Componetns/Loading';
+import Menu from '../../../Componetns/Menu';
 
 export default class Dashboard extends Component {
 
@@ -101,7 +102,7 @@ export default class Dashboard extends Component {
             <div className="wrapper ">
                 <SidebarPanel />
                 <div className="main-panel">
-                    <MenuPanel />
+                    <Menu />
                     <div className="content">
                         <div className="container-fluid">
                             <div className="row">

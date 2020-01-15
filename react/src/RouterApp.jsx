@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+
+import AuthContext from './Contexts/AuthContext';
+
+import PrivateRoute from './PrivateRoute';
 import Main from './Views/Main/Main';
 import Register from './Views/Auth/Register/Register';
 import Menu from './Componetns/Menu';
@@ -14,16 +18,16 @@ import { AuthConsumer } from './Contexts/AuthContext';
 import Dashboard from './Views/Panel/Dashboard/Dashboard';
 import Profile from './Views/Panel/User/Profile';
 
-export default class RouterApp extends Component {
-  render() {
-    let patname = window.location.pathname;
-    return (
-      <AuthConsumer>
-        {({ token, setToken }) => (
-          <Router>
-            {(patname.search("panel") < 0) &&
+function RouterApp() {
+  
+  const token = useContext(AuthContext)
+
+  return (
+    <>
+<Router>
             <Menu />
-            }
+            {/* {(patname.search("panel") < 0) &&
+            } */}
             <div>
               <Switch>
                 <Route exact path="/" component={Main} />
@@ -36,9 +40,13 @@ export default class RouterApp extends Component {
                 <Route path="/password/reset/:token" component={PasswordReset} />
 
 
-                <Route path="/panel/dashboard"  render={() => ( (token) ? (<Dashboard />) : (<Redirect to="/login" />) )} />
+                {/* <Route path="/panel/dashboard"  render={() => ( (token) ? (<Dashboard />) : (<Redirect to="/login" />) )} />
                 
-                <Route path="/panel/profile"  render={() => ( (token) ? (<Profile />) : (<Redirect to="/login" />) )} />
+                <Route path="/panel/profile"  render={() => ( (token) ? (<Profile />) : (<Redirect to="/login" />) )} /> */}
+
+                
+                <PrivateRoute path="/panel/dashboard" component={Dashboard} />
+                <PrivateRoute path="/panel/profile" component={Profile} />
 
                 {/* <Route path="/panel/dashboard" component={Dashboard} />
                 <Route path="/panel/profile" component={Profile} /> */}
@@ -49,9 +57,25 @@ export default class RouterApp extends Component {
               </Switch>
             </div>
           </Router>
-        
-        )}
-      </AuthConsumer>
-    )
-  }
+
+    </>
+  );
+
+
 }
+
+export default RouterApp;
+
+// export default class RouterApp extends Component {
+//   render() {
+    
+//     return (
+//       <AuthConsumer>
+//         {({ token, setToken }) => (
+          
+        
+//         )}
+//       </AuthConsumer>
+//     )
+//   }
+// }

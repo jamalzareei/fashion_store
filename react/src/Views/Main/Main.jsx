@@ -11,18 +11,30 @@ import ProductSell from './Sections/ProductSell';
 import Application from './Sections/Application';
 import SellerWin from './Sections/SellerWin';
 import Vip2 from './Sections/Vip2';
+import Crop from '../../Componetns/Crop';
 
 
 class Main extends Component {
+
     componentDidMount() {
         window.scroll(0, 0);
     }
+
+    
+    state={
+        cropResult : ''
+    }
+    cropImage = (cropResult) => {this.setState({ cropResult })}
 
     render() {
         return (
                 <div className="transition-item detail-page">
                     <Photomain />
                     <div className="main main-raised ">
+                        
+                        <Crop  updateSrc={this.cropImage} />
+                        <img src={this.state.cropResult} />
+
                         <hr className="my-1" />
                         <Info />
                         <hr className="my-1" />

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import '../material-kit-react';
 import "./Assets/css/material-kit.css?v=2.1.1";
+import "./Assets/fontawesome/css/all.css"
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
 
