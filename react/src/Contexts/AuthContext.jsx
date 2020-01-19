@@ -1,13 +1,24 @@
-import React from "react";
+import React from 'react';
 
-// set the defaults
-const AuthContext = React.createContext({
-  token: (localStorage.getItem("token") !== null) ? localStorage.getItem("token") : null,
-  setToken: () => {}
+// function AuthContext() {
+export const authContext = React.createContext({
+    token: (localStorage.getItem("token") !== null) ? localStorage.getItem("token") : null,
+    user: {}
 });
 
-const AuthProvider = AuthContext.Provider;
-const AuthConsumer = AuthContext.Consumer;
 
-export {AuthProvider, AuthConsumer};
-export default AuthContext;
+export const initialValeue = {
+    token: (localStorage.getItem("token") !== null) ? localStorage.getItem("token") : null,
+    user: {}
+};
+export const reducer = (state, action) => {
+    switch (action.type) {
+        case 'LOGIN':
+            return { ...state, token: action.token, user: action.user }
+        case 'LOGOUT':
+            return { token: null, user: action.user }
+        default:
+            return state
+    }
+}
+// }

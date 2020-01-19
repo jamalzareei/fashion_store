@@ -2,12 +2,15 @@ import React, { useContext, useReducer, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Axios from '../../../../Axios';
 import { LoadingBtn, LoadingForm, RequestCodeLink } from '../../../../Componetns/Loading';
-import AuthContext from './../../../../Contexts/AuthContext';
+import { authContext } from '../../../../Contexts/AuthContext';
+// import { authContext } from '../../../../App';
+// import AuthContext from './../../../../Contexts/AuthContext';
+// import 
 
 
 function Login() {
 
-    const context = useContext(AuthContext)
+    const userContext = useContext(authContext)
 
     const [statuses, setStatuses] = useState({})
     const [errors, setErrors] = useState({})
@@ -30,10 +33,11 @@ function Login() {
                 setStatuses({})
                 let appState = { isLoggedIn: true, user: response.data.data, timestamp: new Date().toString() };
                 localStorage.setItem("token", response.data.token);
-                localStorage.setItem("user", response.data.data);
 
-                setStatuses(response.data.data)
+                setUser(response.data.data)
                 setToken(response.data.token)
+                userContext.setUser({type: 'LOGIN', token: response.data.token, user: response.data.data})
+                // console.info(userContext)
 
             }, (errors) => {
                 console.log(errors.response);

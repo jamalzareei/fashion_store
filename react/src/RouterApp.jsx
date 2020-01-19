@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
-import AuthContext from './Contexts/AuthContext';
+import { authContext } from './Contexts/AuthContext';
 
 import PrivateRoute from './PrivateRoute';
 import Main from './Views/Main/Main';
@@ -14,16 +14,18 @@ import PasswordCreate from './Views/Auth/PasswordCreate/PasswordCreate';
 import PasswordReset from './Views/Auth/PasswordReset/PasswordReset';
 import Error404 from './Views/Errors/Error404';
 import RequestCode from './Views/Auth/RequestCode/RequestCode';
-import { AuthConsumer } from './Contexts/AuthContext';
+// import { AuthConsumer } from './Contexts/AuthContext';
 import Dashboard from './Views/Panel/Dashboard/Dashboard';
 import Profile from './Views/Panel/User/Profile';
+// import { authContext } from './App';
 
 function RouterApp() {
   
-  const token = useContext(AuthContext)
+  const userContext = useContext(authContext)
 
   return (
     <>
+    {console.log(userContext)}
 <Router>
             <Menu />
             {/* {(patname.search("panel") < 0) &&
@@ -32,9 +34,9 @@ function RouterApp() {
               <Switch>
                 <Route exact path="/" component={Main} />
                 {/* <Route path="/login" component={Login} /> */}
-                <Route path="/register" render={() => ( (token) ? (<Redirect to="/" />) : (<Register />) )} />
+                <Route path="/register" render={() => ( (userContext.data && userContext.data.token) ? (<Redirect to="/" />) : (<Register />) )} />
                 <Route path="/confirm/:uuid" component={Confirm} />
-                <Route path="/login"  render={() => ( (token) ? (<Redirect to="/" />) : (<Login />) )} />
+                <Route path="/login"  render={() => ( (userContext.data && userContext.data.token) ? (<Redirect to="/" />) : (<Login />) )} />
                 <Route path="/request-code" component={RequestCode} />
                 <Route path="/password/create" component={PasswordCreate} />
                 <Route path="/password/reset/:token" component={PasswordReset} />

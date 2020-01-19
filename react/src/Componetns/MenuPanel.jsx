@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom';
-import { AuthConsumer } from '../Contexts/AuthContext';
 
 class MenuPanel extends Component {
   render() {
     return (
-        <AuthConsumer>
-            {({ token, setToken }) => (
                 <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top menu-panel">
                     <div className="container-fluid">
                         <div className="navbar-wrapper">
@@ -69,8 +66,6 @@ class MenuPanel extends Component {
                     </div>
                 </nav>
         
-            )}
-        </AuthConsumer>
     )
   }
 }

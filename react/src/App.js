@@ -7,31 +7,22 @@ import "regenerator-runtime/runtime";
 // import logo from './logo.svg';
 import './App.css';
 import RouterApp from './RouterApp';
-import { AuthProvider } from './Contexts/AuthContext';
+// import { AuthProvider } from './Contexts/AuthContext';
 import Axios from './Axios';
+import { authContext, reducer, initialValeue } from './Contexts/AuthContext';
 
 //  const authContext = useContext();
 
-
-  const initialValeue = 0;
-  const reducer = (state , action) => {
-    switch (action) {
-      case 'LOGIN':
-        return 
-      default:
-        return state
-    }
-  }
 function App(){
 
-  const [token, dispatch] = useReducer(reducer, initialValeue)
+  const [data, dispatch] = useReducer(reducer, initialValeue)
 
     return (
-      <AuthProvider value={{ token: token, setToken: dispatch }}>
+      <authContext.Provider value={{ data: data, setUser: dispatch }}>
           <div className="App">
             <RouterApp />
           </div >
-      </AuthProvider>
+      </authContext.Provider>
     );
     
 }
