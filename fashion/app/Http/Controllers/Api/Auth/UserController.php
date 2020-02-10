@@ -34,23 +34,42 @@ class UserController extends Controller
             // 'state' => 'required|integer',
             // 'city' => 'required|integer',
             'about_me' => 'required|string',
-            'file' => 'sometimes|image',
+            // 'file' => 'sometimes|image',
         ]);
 
+        // return $request->all();
         
         $user = User::find(Auth::user()->id);
 
         // if($request->file != 'undefined'){
-        if($request->hasFile('file')) {
+        // if($request->hasFile('file')) {
 
+        //     $date = date('Y-m-d');
+        //     $path = "uploads/users/$user->id/$date";
+        //     $photos = [$request->file];
+        //     $photos = UploadService::saveFile($path, $photos);
+
+        //     // $user->image()->update([
+        //     //     'active' => 0
+        //     // ]);
+        //     $user->image()->updateOrCreate(
+        //         ['imageable_id' => $user->id, 'imageable_type' => 'App\User'],
+        //         [
+        //             'path' => $photos,
+        //             'type' => '',
+        //             'active' => 1
+        //         ]
+        //     );
+        // }
+        // return $photos;
+
+        if($request->file){
             $date = date('Y-m-d');
             $path = "uploads/users/$user->id/$date";
-            $photos = [$request->file];
-            $photos = UploadService::saveFile($path, $photos);
+            $photos = $request->file;
+            $photos = UploadService::imageCropPost($path, $photos);
 
-            // $user->image()->update([
-            //     'active' => 0
-            // ]);
+            // return $photos;
             $user->image()->updateOrCreate(
                 ['imageable_id' => $user->id, 'imageable_type' => 'App\User'],
                 [
@@ -60,7 +79,6 @@ class UserController extends Controller
                 ]
             );
         }
-        // return $photos;
 
 
         /*

@@ -60,9 +60,7 @@ class FormRegister extends Component {
         return (
             <div className="card card-signup m-0">
                 {/* <LoadingForm /> */}
-                <div className="progress m-0">
                     {this.state.statuses.loadForm}
-                </div>
                 <form className="form" method="post" action="/auth/register" onSubmit={this.handleSubmitRegister('auth/register')}>
                     <p className="description text-center">
                         <i className="fas fa-signature"></i>
@@ -97,7 +95,7 @@ class FormRegister extends Component {
                                         <i class="fas fa-key text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="text" className="form-control dir-ltr" id="password" name="password" placeholder="رمز عبور" />
+                                <input type="password" className="form-control dir-ltr" id="password" name="password" placeholder="رمز عبور" />
                             </div>
                                 <p className="text-right text-danger m-0 feedback-error small text-log">{this.state.errors.password}</p>
                         </span>
@@ -108,7 +106,7 @@ class FormRegister extends Component {
                                         <i class="fas fa-key text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="text" className="form-control dir-ltr" id="password_confirmation" name="password_confirmation" placeholder="تکرار رمز عبور" />
+                                <input type="password" className="form-control dir-ltr" id="password_confirmation" name="password_confirmation" placeholder="تکرار رمز عبور" />
                             </div>
                                 <p className="text-right text-danger m-0 feedback-error small text-log">{this.state.errors.password_confirmation}</p>
                         </span>

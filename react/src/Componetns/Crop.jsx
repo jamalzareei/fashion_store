@@ -45,21 +45,31 @@ export default class Crop extends Component {
     render() {
         return (
             <div>
-                <div>Seccion de publicar foto</div>
+                {/* <div>انتخاب و برش عکس</div> */}
 
-                <input type="file" id="uploadImage" name="uploadImage" onChange={this.onChangeImage} />
 
+                <div>
+                    <span class="btn btn-raised btn-round btn-default btn-file">
+                        <span class="fileinput-new">انتخاب عکس پروفایل</span>
+                        {/* <span class="fileinput-exists">Change</span> */}
+                        <input type="file" id="uploadImage" name="uploadImage" onChange={this.onChangeImage} />
+                    </span>
+                </div>
                 <Cropper
-                    style={{ height: 400, width: '100%' }}
+                    style={{ height: 300, width: '100%' }}
                     preview=".img-preview"
                     guides={false}
                     src={this.state.src}
                     ref={cropper => { this.cropper = cropper; }}
+                    cropBoxResizable={this.props.cropBoxResizable}
+                    minCropBoxWidth={this.props.height}
+                    maxCropBoxWidth={this.props.width}
+                    aspectRatio={this.props.width / this.props.height}
                     // crop={this.cropImage}
                 />
 
                 <button onClick={this.cropImage} style={{ float: 'right' }}>
-                    Cortar imagen
+                    تایید عکس
                 </button>
 
 

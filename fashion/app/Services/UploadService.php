@@ -134,4 +134,34 @@ class UploadService
         // return: http://localhost/myproject/
         return str_replace('\\','',$protocol.$hostName.$pathInfo['dirname']);
     }
+
+    public static function imageCropPost($path, $photos)
+    {
+        $data = $photos;// $request->image;
+
+        $pathFull = public_path($path);
+        // $photos = $request->file('file');
+ 
+        if (!is_dir($pathFull)) {
+            mkdir($pathFull, 0777, true);
+        }
+
+        list($type, $data) = explode(';', $data);
+        list(, $data)      = explode(',', $data);
+
+
+        $data = base64_decode($data);
+        // $image_name= time().'.png';
+        
+        $name = sha1(date('YmdHis') . Str::random(30));
+        $image_name = $name . '.png';
+        $path_ = "$pathFull/" . $image_name;
+
+
+        file_put_contents($path_, $data);
+
+        return "$path/" . $image_name;
+
+        return response()->json(['success'=>'done']);
+    }
 }
