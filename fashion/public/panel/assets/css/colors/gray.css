@@ -1,0 +1,147 @@
+/*Just change your choise color here its theme Colors*/
+
+body {
+    background: #fff;
+}
+
+
+/*Top Header Part*/
+
+.top-left-part {
+    background: #8E8E8E;
+}
+
+.logo i {
+    color: #ffffff;
+}
+
+.navbar-header {
+    background: #9E9E9E;
+}
+
+.nav.navbar-top-links>li>a {
+    color: #ffffff;
+}
+
+
+/*Right panel*/
+
+.right-sidebar .rpanel-title {
+    background: #9E9E9E;
+}
+
+
+/*Bread Crumb*/
+
+.bg-title .breadcrumb .active {
+    color: #9E9E9E;
+}
+
+
+/*Sidebar*/
+
+.sidebar {
+    background: #fff;
+    -webkit-box-shadow: -1px 0px 20px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: -1px 0px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: -1px 0px 20px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar .label-custom {
+    background: #01c0c8;
+}
+
+#side-menu li a {
+    color: #54667a;
+}
+
+#side-menu li.active>a {
+    background: #f3f6f8;
+}
+
+#side-menu>li>a.active {
+    background: #f5f8fa;
+    border-right: 3px solid #9E9E9E;
+    color: #2b2b2b;
+}
+
+#side-menu>li>a:hover {
+    background: #f1f4f6;
+}
+
+#side-menu>li>a.active i {
+    color: #9E9E9E;
+}
+
+#side-menu ul>li>a.active {
+    color: #2b2b2b;
+}
+
+#side-menu ul>li>a:hover {
+    color: #9E9E9E;
+}
+
+.sidebar #side-menu .user-pro .nav-second-level a:hover {
+    color: #9E9E9E;
+}
+
+
+/*themecolor*/
+
+.bg-theme {
+    background-color: #0ac0cc !important;
+}
+
+.bg-theme-dark {
+    background-color: #01c0c8 !important;
+}
+
+
+/*Chat widget*/
+
+.chat-list .odd .chat-text {
+    background: #9E9E9E;
+}
+
+
+/*Button*/
+
+.btn-custom {
+    background: #9E9E9E;
+    border: 1px solid #9E9E9E;
+    color: #ffffff;
+}
+
+.btn-custom:hover {
+    background: #9E9E9E;
+    opacity: 0.8;
+    color: #ffffff;
+    border: 1px solid #9E9E9E;
+}
+
+
+/*Custom tab*/
+
+.customtab li.active a,
+.customtab li.active a:hover,
+.customtab li.active a:focus {
+    border-bottom: 2px solid #9E9E9E;
+    color: #9E9E9E;
+}
+
+.tabs-vertical li.active a,
+.tabs-vertical li.active a:hover,
+.tabs-vertical li.active a:focus {
+    background: #9E9E9E;
+    border-left: 2px solid #9E9E9E;
+}
+
+
+/*Nav-pills*/
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    background: #9E9E9E;
+    color: #ffffff;
+}
