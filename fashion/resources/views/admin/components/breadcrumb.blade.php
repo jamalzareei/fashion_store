@@ -7,7 +7,7 @@
     <!-- .breadcrumb -->
     <div class="col-lg-9 col-md-8 col-12">
         <ol class="breadcrumb">
-            <li><a href="{{ route('panel') }}">داشبورد</a></li>
+            <li><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
             <li class="active">{{ $title }}</li>
         </ol>
     </div>

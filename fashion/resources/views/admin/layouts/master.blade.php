@@ -53,14 +53,7 @@
 		</div> -->
 		<div id="wrapper">
 			@include('admin.components.navigation')
-			@if (auth()->user()->role == 2)
-				@include('admin.components.sidebar-merchants')
-			@elseif (auth()->user()->role == 3)
-				@include('admin.components.sidebar-suppliers')
-				
-			@elseif (auth()->user()->role == 1)
-				@include('admin.components.sidebar-admin')
-			@endif
+			@include('admin.components.sidebar-admin')
 			<div id="page-wrapper">
 				<div class="container-fluid">
 					@include('admin.components.breadcrumb')

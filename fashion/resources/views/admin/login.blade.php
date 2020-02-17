@@ -44,7 +44,7 @@
 	<section id="wrapper" class="login-register">
 		<div class="login-box login-sidebar">
 			<div class="white-box">
-				<form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('login.new') }}">
+				<form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('login.admin') }}">
 						@csrf
 					<input type="hidden" name="code_country" value="0098">
 					<a href="javascript:void(0)" class="text-center db">
@@ -65,10 +65,10 @@
 					@endif
 					<div class="form-group m-t-40">
 						<div class="col-12">
-                            <input class="form-control @error('login') is-invalid @enderror" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" type="text" name="login" value="{{ old('login') }}" required="" placeholder="نام کاربری">
+                            <input class="form-control @error('username') is-invalid @enderror" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" type="text" name="username" value="{{ old('username') }}" required="" placeholder="نام کاربری">
                              
 
-                                @error('login')
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -105,24 +105,6 @@
 								<a target="_blank" class="text-success" href="https://cerampakhsh.com/landing" class="m-r-5"><b>ثبت نام فروشنده</b></a>
 								<a target="_blank" class="text-primary" href="https://cerampakhsh.com/page/%D8%AB%D8%A8%D8%AA-%D9%86%D8%A7%D9%85-%D8%AA%D8%A7%D9%85%DB%8C%D9%86-%DA%A9%D9%86%D9%86%D8%AF%DA%AF%D8%A7%D9%86/18" class="m-r-5"><b>ثبت نام تولید کننده</b></a>
 							</p>
-						</div>
-					</div>
-				</form>
-				<form class="form-horizontal" id="recoverform" action="index.html">
-					<div class="form-group ">
-						<div class="col-12">
-							<h3>بازیابی رمز عبور</h3>
-							<p class="text-muted">ایمیل خود را وارد کنید تا دستورالعمل ها به شما ارسال شود! </p>
-						</div>
-					</div>
-					<div class="form-group ">
-						<div class="col-12">
-							<input class="form-control" type="text" required="" placeholder="ایمیل">
-						</div>
-					</div>
-					<div class="form-group text-center m-t-20">
-						<div class="col-12">
-							<button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">ارسال</button>
 						</div>
 					</div>
 				</form>

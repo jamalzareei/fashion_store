@@ -63,6 +63,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cors' => \App\Http\Middleware\Cors::class, // <-- add this line
         'jwt-auth' => \App\Http\Middleware\jwtMiddleware::class,
+        
+        'admin' => \App\Http\Middleware\Admin::class,
     ];
 
     /**
