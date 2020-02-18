@@ -36,4 +36,14 @@ Route::prefix("/admin")->middleware(['admin'])->namespace('Admin')->group(functi
     // Route::prefix("/admin")->middleware(['admin'])->namespace('Admin')->group(function(){
     //
     Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard');
+
+    Route::get('/users', 'UsersController@users')->name('admin.users');
+    // Route::post('/users/update', 'UsersController@usersUpdate')->name('admin.users.update');
+    Route::post('/user/update/{id}', 'UsersController@userUpdate')->name('admin.user.update');
+    Route::delete('/user/delete/{id}', 'UsersController@userDelete')->name('admin.user.delete');
+
+    
+    Route::get('/roles', 'UsersController@roles')->name('admin.roles');
+    Route::post('/role/add', 'UsersController@roleAdd')->name('admin.user.add');
+    Route::delete('/role/delete/{id}', 'UsersController@roleDelete')->name('admin.role.delete');
 });

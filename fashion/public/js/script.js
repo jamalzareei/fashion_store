@@ -334,3 +334,25 @@ function delete_(url, redirect) {
         }
     });
 }
+
+function changeStatus(url, this_){
+    var active = (this_.checked == true) ? 1 : 0;
+    console.log(active)
+    $.ajax({
+        url: url,
+        method: 'post',
+        data: { ajax: 'true',active:active },
+        success: function(response) {
+            Swal.fire({
+                title: response.title,
+                text: response.message,
+                type: response.status,
+            })
+        },
+        error: function(request, status, error) {
+            console.log(request);
+            console.log(status);
+            console.log(error);
+        }
+    });
+}

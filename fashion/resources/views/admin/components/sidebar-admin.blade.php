@@ -26,6 +26,18 @@
             </li>
 
             
+            <li class="  "> 
+                <a href="" class="waves-effect " class="small">
+                    <i class="fa fa-product-hunt zmdi-hc-fw fa-fw"></i> 
+                    <span class="hide-menu"> کاربران <span class="fa arrow"></span></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    {{--  <li> <a href="{{ route('panel.adminer.users.roles') }}"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>سطح دسترسی</a> </li>  --}}
+                    <li> <a href="{{ route('admin.users') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>لیست کاربران</a> </li>
+                    <li> <a href="{{ route('admin.roles') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>سطح های دسترسی</a> </li>
+                </ul>
+            </li>
+            
 
             <li class="nav-small-cap">-------------</li>
             <li><a href="{{ route('log-out') }}" class="waves-effect"><i class="zmdi zmdi-power zmdi-hc-fw fa-fw"></i> <span class="hide-menu">خروج</span></a></li>

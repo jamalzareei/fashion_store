@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\PanelAdmin;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Models\Config;
+use App\Models\Role;
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -17,15 +18,7 @@ class UsersController extends Controller
         a:3:{i:0;a:2:{s:8:"usertype";s:1:"A";s:10:"membership";s:17:"Fulfillment staff";}i:1;a:2:{s:8:"usertype";s:1:"C";s:10:"membership";s:17:"مدیر سایت";}i:2;a:2:{s:8:"usertype";s:1:"P";s:10:"membership";s:23:"مدیر فروشگاه";}}
 
         */
-        $roles = Config::where('name','membership_levels')->first();
-        $data = unserialize($roles->value);
-
-        foreach ($data as $key => $role) {
-            # code...
-            $data[$key]['role_id'] = $role_id = isset($role['role_id']) ? $role['role_id'] : 0;
-            $usertype = isset($role['usertype']) ? $role['usertype'] : '';
-            $data[$key]['count_users'] = User::where([['role', $role_id],['usertype', $usertype]])->count();
-        }
+        $data = Role::withCount('users')->get();
 
         // return $data;
         
@@ -35,108 +28,80 @@ class UsersController extends Controller
         ]);
     }
 
-    public function roleDelete(Request $request, $key)
+    public function roleDelete(Request $request, $id)
     {
-        $roles = Config::where('name','membership_levels')->first();
-        $data = unserialize($roles->value);
+        $role = Role::where('id', $id)->delete();
 
-        // return $data;
-
-        unset($data[$key]);
-
-        Config::where('name','membership_levels')->update([
-            'value' => (serialize($data))
-        ]);
-
+        // return $user;
         if (request()->ajax) {
             return [
                 'title' => '',
-                'message' => 'با موفقیت حذف گردید. 3',
+                'message' => 'با موفقیت حذف گردید.',
                 'status' => 'info',
                 'data' => '',
             ];
         } else {
-            return redirect()->back()->with('noty', [
+            return redirect()->route('panel.adminer.users')->with('noty', [
                 'title' => '',
                 'message' => 'با موفقیت حذف گردید.',
                 'status' => 'info',
                 'data' => '',
             ]);
-        }      
+        }     
 
     }
 
-    public function addRole(Request $request)
+    public function roleAdd(Request $request)
     {
         $request->validate([
-            'usertype' => 'required|min:1|max:1',
-            'role_id' => 'required|numeric',
-            'membership' => 'required|string',
+            'name' => 'required|string',
+            'code' => 'required|min:1|max:1',
+            'slug' => 'required|string|unique:roles,slug',
+            'description' => 'required|string',
         ]);
 
-        $roles = Config::where('name','membership_levels')->first();
-        $data = unserialize($roles->value);
-
-        
-        foreach ($data as $key => $role) {
-            # code...
-            $data[$key]['role_id'] = $role_id = isset($role['role_id']) ? $role['role_id'] : 0;
-            $usertype = isset($role['usertype']) ? $role['usertype'] : '';
-            $data[$key]['count_users'] = User::where([['role', $role_id],['usertype', $usertype]])->count();
-        }
-
-        $role = [
-            'usertype' => $request->usertype,
-            'membership' => $request->membership,
-            'role_id' => $request->role_id,
-        ];
-
-        $data[] = $role;
-
-
-        // $data = (serialize($data));
-        // $data = unserialize($data);
-        // return $data;
-        // array_push($data, $role);
-
-        Config::where('name','membership_levels')->update([
-            'value' => (serialize($data))
+        $role = Role::create([
+            'name' => $request->name,
+            'code' => $request->code,
+            'slug' => $request->slug,
+            'description' => $request->description,
         ]);
 
-        return back();    
+        return back()->with('noty', [
+            'title' => '',
+            'message' => 'با موفقیت اضافه گردید.',
+            'status' => 'success',
+            'data' => '',
+        ]);    
     }
     //
     public function users(Request $request,$role = null)
     {
         $title = ($request->title) ? $request->title : null;
 
-        $users = User::whereNotNull('login')->where('login','!=','0')
+        $users = User::whereNotNull('id')
             // ->select('login')
             ->when($role, function($qRole) use ($role){
                 $qRole->where('role', $role);
             })
             ->when($title, function($query) use($title){ 
                 $query->where(function($query_) use($title){
-                    $query_->orWhere('login', 'like', "%$title%")
+                    $query_->orWhere('username', 'like', "%$title%")
                     ->orWhere('phone', 'like', "%$title%")
                     ->orWhere('email', 'like', "%$title%")
                     ->orWhere('firstname', 'like', "%$title%")
                     ->orWhere('lastname', 'like', "%$title%"); 
                 });
             })
+            ->with('roles')
             // ->toSql();
             ->paginate(50);
 
             // return $users;
 
-        $roles = Config::where('name','membership_levels')->first();
-        $date = unserialize($roles->value);
-
-        $membership = collect($date);
 
         return view('admin.pages-admin.list-users', [
             'users'         => $users,
-            'membership'    => $membership,
             'title'         => 'لیست کاربران',
         ]);
     }
@@ -168,24 +133,58 @@ class UsersController extends Controller
             'data' => '',
         ]);
     }
-    
-    public function userDelete(Request $request, $login)
+
+    public function userUpdate(Request $request, $id)
     {
-        $login = '00'.ltrim($login,'00');
-        $user = User::where('login', $login)->delete();
+        # code...
+        $user = User::where('id', $id)->first();
+
+        $active = ($request->active) ? 1 : 0;
+        // return $request->active;
+
+        if($active){
+            $user->email_verified_at =  Carbon::now()->toDateTimeString();
+            $user->phone_verified_at =  Carbon::now()->toDateTimeString();
+        }else{
+            $user->email_verified_at =  null;
+            $user->phone_verified_at =  null;
+        }
+
+        $user->save();
+        
+        if (request()->ajax) {
+            return [
+                'title' => '',
+                'message' => 'با موفقیت اپدیت گردید.',
+                'status' => 'success',
+                'data' => '',
+            ];
+        } else {
+            return redirect()->route('panel.adminer.users')->with('noty', [
+                'title' => '',
+                'message' => 'با موفقیت اپدیت گردید.',
+                'status' => 'success',
+                'data' => '',
+            ]);
+        }
+    }
+    
+    public function userDelete(Request $request, $id)
+    {
+        $user = User::where('id', $id)->delete();
 
         // return $user;
         if (request()->ajax) {
             return [
                 'title' => '',
-                'message' => 'با موفقیت حذف گردید.1',
+                'message' => 'با موفقیت حذف گردید.',
                 'status' => 'info',
                 'data' => '',
             ];
         } else {
             return redirect()->route('panel.adminer.users')->with('noty', [
                 'title' => '',
-                'message' => 'با موفقیت حذف گردید.2',
+                'message' => 'با موفقیت حذف گردید.',
                 'status' => 'info',
                 'data' => '',
             ]);
