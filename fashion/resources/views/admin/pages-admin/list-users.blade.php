@@ -6,6 +6,9 @@
 @section('css')
     
 <link href="{{asset('panel/assets/plugins/bootstrap-switch/bootstrap-switch.min.css')}}" rel="stylesheet">
+<link href="{{asset('panel/assets/plugins/custom-select/custom-select.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('panel/assets/plugins/bootstrap-select/bootstrap-select.min.css')}}" rel="stylesheet">
+<link href="{{asset('panel/assets/plugins/multiselect/css/multi-select.css')}}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -30,12 +33,12 @@
             <div class="panel-heading">{{ $title }}</div>
             <div class="panel-body pt-5 row">
                 <div class="col-lg-12 col-md-12 col-sm-12 pr-4">
-                    {{--  <form action="{{ route('admin.users.update') }}" method="post">
-                        @csrf  --}}
+                    <form action="{{ route('admin.users.update') }}" method="post">
+                        @csrf
                         <table class="table color-bordered-table inverse-bordered-table">
                             <thead>
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="7">
                                         <button class="btn btn-block btn-rounded btn-primary waves-effect" type="submit">اعمال تغییرات</button>
                                     </td>
                                 </tr>
@@ -45,6 +48,7 @@
                                     <th class="text-center">نام</th>
                                     <th class="text-center">ایمیل</th>
                                     <th class="text-center">شماره همراه</th>
+                                    <th class="text-center">سطح دسترسی ها</th>
                                     <th class="text-center">فعال/غیر فعال</th>
                                 </tr>
                             </thead>
@@ -59,13 +63,22 @@
                                         <th class="text-center">{{$user->email}}</th>
                                         <th class="text-center">{{$user->phone}} </th>
                                         <th class="text-center">
+                                            <input type="hidden" name="data[{{$user->id}}][id]" value="{{$user->id}}" >
+                                            
+                                            <select name="data[{{$user->id}}][roles][]" id="roles" class="select2 m-b-10 select2-multiple" multiple>
+                                                @foreach ($roles as $role)
+                                                    <option value="{{$role->id}}" {{ ($user->roles->where('slug', $role->slug)->first()) ? 'selected' : ''}} >{{$role->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </th>
+                                        <th class="text-center">
                                             <input data-on-text="فعال" data-off-text="غیرفعال" class="js-switch small" type="checkbox" data-size="small"  name="data[{{$user->id}}][active]" {{($user->email_verified_at || $user->phone_verified_at) ? 'checked' : ''}} value="1" onchange="changeStatus('{{route('admin.user.update', ['id' => $user->id])}}',this)">
                                             <i onclick="delete_('{{ route('admin.user.delete', ['id'=>$user->id]) }}', '{{ url()->full() }}')" class="btn btn-youtube waves-effect btn-circle float-right waves-light"><i class="fa fa-times"></i> </i>
                                         </th>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="7">
                                             <div class="alert alert-danger text-center">
                                                 هیچ کاربری وجود ندارد.
                                             </div>
@@ -76,13 +89,13 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="7">
                                         <button class="btn btn-block btn-rounded btn-primary waves-effect" type="submit">اعمال تغییرات</button>
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
-                    {{--  </form>  --}}
+                    </form>
                     <div class="row text-center">
                         {{ $users->appends($_GET)->links() }}
                     </div>
@@ -99,7 +112,10 @@
 @section('js')
     
 <script src="{{asset('panel/assets/plugins/bootstrap-switch/bootstrap-switch.min.js')}}"></script>
+<script src="{{asset('panel/assets/plugins/custom-select/custom-select.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('panel/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
     $('.js-switch').bootstrapSwitch();
+    $(".select2").select2();
 </script>
 @endsection

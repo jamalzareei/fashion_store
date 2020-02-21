@@ -98,10 +98,12 @@ class UsersController extends Controller
             ->paginate(50);
 
             // return $users;
-
+        
+        $roles = Role::all();
 
         return view('admin.pages-admin.list-users', [
             'users'         => $users,
+            'roles'         => $roles,
             'title'         => 'لیست کاربران',
         ]);
     }
@@ -112,21 +114,18 @@ class UsersController extends Controller
 
         foreach ($request->data as $key => $value) {
             # code...
-            $active = isset($value['active']) ? 1 : 0;
+            $active = isset($value['active']) ? Carbon::now()->toDateTimeString() : null;
             // echo $key;
-            if(isset($value['check'])){
-                // echo $value['usertype'].'<br>';
-                // echo $value['role_id'].'<br>';
-                // echo $active.'<br>';
-                // return $key;
-                User::where('login', $key)->update([
-                    'usertype' => $value['usertype'],
-                    'role' => $value['role_id'],
-                    'active' => $active,
-                ]);
-            }
+            User::where('id', $key)->update([
+                // 'usertype' => $value['usertype'],
+                // 'role' => $value['role_id'],
+                'email_verified_at' => $active,
+                'phone_verified_at' => $active,
+            ]);
+
+            User::where('id', $key)->first()->roles()->sync($value['roles']);
         }
-        return redirect()->route('panel.adminer.users')->with('noty', [
+        return back()->with('noty', [
             'title' => '',
             'message' => 'با موفقیت ویرایش گردید.',
             'status' => 'info',
