@@ -25,7 +25,8 @@ class UploadService
      */
     public static function saveFile($path, $photos)
     {
-        $path = '../../httpdocs/files/' . $path;
+        // $path = 'uploads/files/' . $path;
+        $path = $path;
         $path_save = $path;
         $pathFull = public_path($path);
         // $photos = $request->file('file');
@@ -41,12 +42,6 @@ class UploadService
         $lists = ''; //[];
 
         for ($i = 0; $i < count($photos); $i++) {
-            // if( $photos ) {
-            //     $path = $photos->getRealPath();
-            //     return $path;
-            // } else {
-            //     return 'back()->withErrors(...)';
-            // }
 
             $photo = $photos[$i];
 
@@ -57,34 +52,16 @@ class UploadService
             $name = sha1(date('YmdHis') . Str::random(40));
             $save_name = $name . '.' . $photo->getClientOriginalExtension();
             // echo $path; return;
-            self::resizeImage($photo, str_replace('../../httpdocs/','../../httpdocs/resize/big/',$path), $save_name, 1000, ($image_height * 1000) / $image_width);
-            if($image_width == $image_height){
-                self::resizeImage($photo, str_replace('../../httpdocs/','../../httpdocs/resize/medium/',$path), $save_name, 420, ($image_height * 420) / $image_width);
-            }else{
-                self::resizeImage($photo, str_replace('../../httpdocs/','../../httpdocs/resize/medium/',$path), $save_name, 465, ($image_height * 465) / $image_width);
-            }
-            self::resizeImage($photo, str_replace('../../httpdocs/','../../httpdocs/resize/small/',$path), $save_name, 230, ($image_height * 230) / $image_width);
+            self::resizeImage($photo, "resize/big/$path", $save_name, 1000, ($image_height * 1000) / $image_width);
+            self::resizeImage($photo, "resize/medium/$path", $save_name, 420, ($image_height * 420) / $image_width);
+            self::resizeImage($photo, "resize/small/$path", $save_name, 230, ($image_height * 230) / $image_width);
             
-
             $photo->move($pathFull, $save_name);
 
-
-
-            // self::resizeImage($photo, $path, 300, 300);
             $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
-            // array_push($lists, $protocol.$_SERVER['HTTP_HOST'].'/'.$path.'/'. $save_name);
-            //$protocol.$_SERVER['HTTP_HOST']
-
             
-            // $lists= self::baseUrl().'/'.$path.'/'. $save_name;
-            $path = str_replace('../../httpdocs/', '', $path);
+            // $path = str_replace('uploads/', '', $path);
             
-            // $resizepath = "$pathFull/$save_name";
-            // self::uploadImageWithCopies(str_replace('../../httpdocs/','../../httpdocs/resize/big/',$resizepath), "$pathFull/$save_name", $save_name, '420');
-            
-            // self::resizeFinal($resizepath,str_replace('../../httpdocs/','../../httpdocs/resize/big/',$resizepath), 420, 420);
-            // $request->file('photo')->getRealPath()
-
             $lists = $path . '/' . $save_name;
         }
         return $lists;
@@ -95,23 +72,27 @@ class UploadService
      *
      * @param Request $request
      */
-    public static function destroyFile($imageUrl)
+    public static function destroyFile($path)
     {
-        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
-        // array_push($lists, $protocol.$_SERVER['HTTP_HOST'].'/'.$path.'/'. $save_name);
-        $domain = $protocol . $_SERVER['HTTP_HOST'];
+        // $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+        // $domain = $protocol . $_SERVER['HTTP_HOST'];
 
-        $domain = self::baseUrl();
+        // $domain = self::baseUrl();
 
-        $path = str_replace($domain, public_path(), $imageUrl);
-        if (file_exists($path)) {
-            unlink($path);
+        // $path = str_replace($domain, public_path(), $imageUrl);
+        if (file_exists("public/$path")) {
+            unlink("public/$path");
+        }
+        if (file_exists("public/resize/big/$path")) {
+            unlink("public/resize/big/$path");
+        }
+        if (file_exists("public/resize/medium/$path")) {
+            unlink("public/resize/medium/$path");
+        }
+        if (file_exists("public/resize/small/$path")) {
+            unlink("public/resize/small/$path");
         }
 
-        // if (file_exists($path)) {
-        //     unlink($path);
-        //     Storage::delete('250/'.$path);
-        // }
     }
 
     public static function resizeImage($image, $path, $save_name, $width, $height = null)
@@ -121,19 +102,16 @@ class UploadService
         if ($height == null) {
             $height = $width;
         }
-        // $image=Request()->file('img');
 
         $pathFull_ = $path . '/';
 
         $pathFull = public_path($pathFull_);
-        // $photos = $request->file('file');
 
         if (!is_dir($pathFull)) {
             mkdir($pathFull, 0777, true);
         }
 
-        // $image       = $request->file('image');
-        $filename    = $save_name;//'zareie' . '-' . time() . '.' . $image->getClientOriginalName();
+        $filename    = $save_name;
 
         $image_resize = Image::make($image->getRealPath());
         $image_resize->resize($width, $height);
@@ -146,16 +124,11 @@ class UploadService
     {
         $currentPath = $_SERVER['PHP_SELF'];
 
-
-        // output: Array ( [dirname] => /myproject [basename] => index.php [extension] => php [filename] => index )
         $pathInfo = pathinfo($currentPath);
-        // output: localhost
         $hostName = $_SERVER['HTTP_HOST'];
 
-        // output: http://
         $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, 5)) == 'https://' ? 'https://' : 'http://';
 
-        // return: http://localhost/myproject/
         return str_replace('\\', '', $protocol . $hostName . $pathInfo['dirname']);
     }
 
@@ -223,8 +196,8 @@ class UploadService
         }
     }
 
-
-    function resizeImage_2($imagePath, $width, $height, $filterType, $blur, $bestFit, $cropZoom) {
+    function resizeImage_2($imagePath, $width, $height, $filterType, $blur, $bestFit, $cropZoom) 
+    {
         //The blur factor where &gt; 1 is blurry, &lt; 1 is sharp.
         $imagick = new \Imagick(realpath($imagePath));
     
@@ -255,11 +228,9 @@ class UploadService
         echo $imagick->getImageBlob();
     }
 
-    public static function resizeFinal($path, $path_save, $width, $height){
+    public static function resizeFinal($path, $path_save, $width, $height)
+    {
 
-        // ../../httpdocs/resize/big/files/uploads/suppliers/2019-12-09/197f0692d7f104d561af1db926c5090272e737f1.jpg
-        // ../../httpdocs/resize/big/uploads/suppliers/2019-12-09/197f0692d7f104d561af1db926c5090272e737f1.jpg
-        // echo $path.'<br>';echo $path_save;return;
         $filename = $path;
         $percent = 0.5;
 
@@ -277,13 +248,11 @@ class UploadService
         // Resize
         imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
-        // copy(str_replace('../../','',$filename),$path_save);
-        // Output
-        // imagejpeg($thumb);
     }
 
     
-    public static function resizeFinal_2($path, $path_save, $width, $height){
+    public static function resizeFinal_2($path, $path_save, $width, $height)
+    {
         $filename = $path;
         $percent = 0.5;
 
@@ -300,7 +269,5 @@ class UploadService
         $image = imagecreatefromjpeg($filename);
         imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
-        // Output
-        // imagejpeg($image_p, null, 100);
     }
 }

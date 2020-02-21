@@ -60,7 +60,7 @@
                                         <th class="text-center">{{$user->phone}} </th>
                                         <th class="text-center">
                                             <input data-on-text="فعال" data-off-text="غیرفعال" class="js-switch small" type="checkbox" data-size="small"  name="data[{{$user->id}}][active]" {{($user->email_verified_at || $user->phone_verified_at) ? 'checked' : ''}} value="1" onchange="changeStatus('{{route('admin.user.update', ['id' => $user->id])}}',this)">
-                                            <i onclick="delete_('{{ route('admin.user.delete', ['id'=>$user->id]) }}', '{{ url()->current() }}')" class="btn btn-youtube waves-effect btn-circle float-right waves-light"><i class="fa fa-times"></i> </i>
+                                            <i onclick="delete_('{{ route('admin.user.delete', ['id'=>$user->id]) }}', '{{ url()->full() }}')" class="btn btn-youtube waves-effect btn-circle float-right waves-light"><i class="fa fa-times"></i> </i>
                                         </th>
                                     </tr>
                                 @empty

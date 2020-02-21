@@ -18,9 +18,9 @@
                         @csrf
                         <div class="form-group col-md-6 mb-5 float-left">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="category" required name="category" value="{{($category) ? $category->category : ''}}" ><span class="highlight"></span> <span class="bar"></span>
-                                <label for="category">نام دسته بندی</label>
-                                <span class="help-block text-danger small error-category"></span>
+                                <input type="text" class="form-control" id="name" required name="name" value="{{($category) ? $category->name : ''}}" ><span class="highlight"></span> <span class="bar"></span>
+                                <label for="name">نام دسته بندی</label>
+                                <span class="help-block text-danger small error-name"></span>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="link" name="link"  value="{{($category) ? $category->link : ''}}"><span class="highlight"></span> <span class="bar"></span>
@@ -32,24 +32,24 @@
                                     <div class="col-12">
                                         <div class="m-4 row w-100">
                                             <div class="checkbox checkbox-circle checkbox-danger w-100">
-                                                <input id="checkbox_avail" type="checkbox" name="avail" value="Y" {{($category && $category->avail == 'Y') ? 'checked' : ''}}>
-                                                <label for="checkbox_avail"> فعال </label>
+                                                <input id="checkbox_active" type="checkbox" name="active" value="1" {{($category && $category->active == '1') ? 'checked' : ''}}>
+                                                <label for="checkbox_active"> فعال </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="m-4 row w-100">
                                             <div class="checkbox checkbox-circle checkbox-success w-100">
-                                                <input id="checkbox_is_menu" type="checkbox" name="is_menu" value="Y" {{($category && $category->is_menu == 'Y') ? 'checked' : ''}}>
-                                                <label for="checkbox_is_menu"> نمایش در منوی سایت </label>
+                                                <input id="checkbox_menu" type="checkbox" name="menu" value="1" {{($category && $category->menu == '1') ? 'checked' : ''}}>
+                                                <label for="checkbox_menu"> نمایش در منوی سایت </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="m-4 row w-100">
                                             <div class="checkbox checkbox-circle checkbox-primary w-100">
-                                                <input id="checkbox_is_filter" type="checkbox" name="is_filter" value="Y" {{($category && $category->is_filter == 'Y') ? 'checked' : ''}}>
-                                                <label for="checkbox_is_filter"> نمایش در فیلتر ها </label>
+                                                <input id="checkbox_filter" type="checkbox" name="filter" value="1" {{($category && $category->filter == '1') ? 'checked' : ''}}>
+                                                <label for="checkbox_filter"> نمایش در فیلتر ها </label>
                                             </div>
                                         </div>
                                     </div>
@@ -57,8 +57,37 @@
                                     <div class="col-12">
                                         <div class="m-4 row w-100">
                                             <div class="checkbox checkbox-circle checkbox-primary w-100">
-                                                <input id="checkbox_is_add" type="checkbox" name="is_add" value="Y" {{($category && $category->is_add == 'Y') ? 'checked' : ''}}>
-                                                <label for="checkbox_is_add"> قابل انتخاب در دسته بندی اضافه کردن محصول </label>
+                                                <input id="checkbox_add_product" type="checkbox" name="add_product" value="1" {{($category && $category->add_product == '1') ? 'checked' : ''}}>
+                                                <label for="checkbox_add_product"> قابل انتخاب در دسته بندی اضافه کردن محصول </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-5 pt-4">
+                                        <div class="m-4 row w-100">
+                                            <div class="form-group">
+                                                {{--  <input type="text" class="form-control" id="link" required name="link" >  --}}
+                                                <textarea name="default_message" class="form-control" id="default_message" rows="5"> {{($category) ? $category->default_message : ''}}</textarea>
+                                                <span class="highlight"></span> <span class="bar"></span>
+                                                <label for="default_message"> توضیحات یا پیشفرض پراپرتی (با کاما از هم جدا شوند)</label>
+                                                <span class="help-block text-danger small error-default_message"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="m-4 row w-100">
+                                            <div class="checkbox checkbox-circle checkbox-primary w-100">
+                                                <input type="text" class="form-control" id="icon" name="icon"  value="{{($category) ? $category->icon : ''}}"><span class="highlight"></span> <span class="bar"></span>
+                                                <label for="icon">کلاس ایکون (fa fa-book)</label>
+                                                <span class="help-block text-danger small error-icon"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="m-4 row w-100">
+                                            <div class="checkbox checkbox-circle checkbox-primary w-100">
+                                                <input type="text" class="form-control" id="title_page" name="title_page"  value="{{($category) ? $category->title_page : ''}}"><span class="highlight"></span> <span class="bar"></span>
+                                                <label for="title_page">عنوان صفحه (سئو)</label>
+                                                <span class="help-block text-danger small error-title_page"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -68,8 +97,8 @@
                         <div class="form-group col-md-6 mb-5 float-left">
                             <div class="form-group  row w-100">
                                 <label for="imageUrl">عکس محصول</label>
-                                @if ($category && $category->icon)
-                                    <input type="file" id="imageUrl" name="imageUrl" class="dropify file-upload" data-default-file="https://cerampakhsh.com/{{str_replace('/var/www/vhosts/cerampakhsh.com/httpdocs/','',$category->icon->image_path)}}">
+                                @if ($category && $category->image && count($category->image) && $category->image[0])
+                                    <input type="file" id="imageUrl" name="imageUrl" class="dropify file-upload" data-default-file="{{asset($category->image[0]->path)}}">
                                 @else
                                     <input type="file" id="imageUrl" name="imageUrl" class="dropify file-upload">
                                 @endif 
@@ -79,10 +108,17 @@
                             </div>
                             <div class="form-group">
                                 {{--  <input type="text" class="form-control" id="link" required name="link" >  --}}
-                                <textarea name="description" class="form-control" id="description" rows="5"> {{($category) ? $category->description : ''}}</textarea>
+                                <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="5"> {{($category) ? $category->meta_keywords : ''}}</textarea>
                                 <span class="highlight"></span> <span class="bar"></span>
-                                <label for="description">توضیحات</label>
-                                <span class="help-block text-danger small error-description"></span>
+                                <label for="meta_keywords">متا کیورد</label>
+                                <span class="help-block text-danger small error-meta_keywords"></span>
+                            </div>
+                            <div class="form-group">
+                                {{--  <input type="text" class="form-control" id="link" required name="link" >  --}}
+                                <textarea name="meta_description" class="form-control" id="meta_description" rows="5"> {{($category) ? $category->meta_description : ''}}</textarea>
+                                <span class="highlight"></span> <span class="bar"></span>
+                                <label for="meta_description">متا توضیحات</label>
+                                <span class="help-block text-danger small error-meta_description"></span>
                             </div>
                         </div>
 

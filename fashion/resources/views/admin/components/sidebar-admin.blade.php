@@ -37,6 +37,17 @@
                     <li> <a href="{{ route('admin.roles') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>سطح های دسترسی</a> </li>
                 </ul>
             </li>
+
+            
+            <li class="  "> 
+                <a href="" class="waves-effect " class="small">
+                    <i class="fa fa-product-hunt zmdi-hc-fw fa-fw"></i> 
+                    <span class="hide-menu"> دسته بندی <span class="fa arrow"></span></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href="{{ route('panel.admin.categories') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>دسته بندی ها</a> </li>
+                </ul>
+            </li>
             
 
             <li class="nav-small-cap">-------------</li>
