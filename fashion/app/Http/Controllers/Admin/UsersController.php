@@ -116,14 +116,16 @@ class UsersController extends Controller
             # code...
             $active = isset($value['active']) ? Carbon::now()->toDateTimeString() : null;
             // echo $key;
-            User::where('id', $key)->update([
+            $user = User::where('id', $key)->update([
                 // 'usertype' => $value['usertype'],
                 // 'role' => $value['role_id'],
                 'email_verified_at' => $active,
                 'phone_verified_at' => $active,
             ]);
 
-            User::where('id', $key)->first()->roles()->sync($value['roles']);
+            if(isset($value['roles'])){
+                User::where('id', $key)->first()->roles()->sync($value['roles']);
+            }
         }
         return back()->with('noty', [
             'title' => '',

@@ -19,6 +19,7 @@ Route::get('admin/logout', function(){
 
 Route::group(['prefix' => 'admin'], function() {
     //
+    Route::get('/', 'AuthenticatinController@index')->name('admin');
     Route::get('/login', 'AuthenticatinController@index')->name('admin');
 
     Route::post('/login', 'AuthenticatinController@login')->name('login.admin');
@@ -60,7 +61,9 @@ Route::prefix("/admin")->middleware(['admin'])->namespace('Admin')->group(functi
     Route::DELETE('/property/{property_id}', 'CategoriesController@propertyDelete')->name('panel.admin.property.delete');
 
     Route::get('/sellers/{id?}', 'SellersController@sellers')->name('panel.admin.sellers');//////////////////////
-    Route::get('/seler/update/{id?}', 'SellersController@sellerUpade')->name('panel.admin.sellers.update');
+    Route::get('/seller/{slug}', 'SellersController@seller')->name('panel.admin.seller');
+    Route::post('/seler/update/{id}', 'SellersController@sellerUpdate')->name('panel.admin.sellers.update');
+    Route::post('/seler/update/tell/{id}', 'SellersController@sellerUpdateTell')->name('panel.admin.sellers.tell.update');
 });
 
 

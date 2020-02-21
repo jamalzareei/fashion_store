@@ -27,8 +27,8 @@ class CreateSuppliersTable extends Migration
             $table->text('about')->nullable();
             $table->integer('shipping_cost')->default(0);
             $table->integer('time_transfor')->default(0);
-            $table->integer('active')->default(1);
-            $table->integer('active_admin')->default(0);
+            $table->timestamp('tell_verified_at')->nullable();
+            $table->timestamp('active_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
