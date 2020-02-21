@@ -15,7 +15,8 @@ class PageSeed extends Seeder
         $faker = Faker\Factory::create();
         for ($i = 1; $i < 100; $i++) {
 
-            DB::table('pages')->insert([ //,
+            \App\Models\Page::create([ //,
+            // DB::table('pages')->insert([ //,
                 'name' => $faker->name,
                 'name_en' => $faker->unique()->username,
                 'title' => $faker->title,

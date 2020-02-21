@@ -18,16 +18,27 @@ class UserSeed extends Seeder
         //     // $u->posts()->save(factory(App\Post::class)->make());
         // });
 
+        \App\User::create([
+            'uuid' => Str::random(12),
+            'username' => '9135368845',
+            'email' => 'jzcs89@gmail.com',
+            'phone' => '09135368845',
+            'code_country' => '0098',
+            'password' => bcrypt('1430548'),
+
+        ]);
+
         $faker = Faker\Factory::create();
         for ($i = 0; $i < 100; $i++) {
 
-            DB::table('users')->insert([ //,
+            \App\User::create([
+                // DB::table('users')->insert([ //,
                 'uuid' => Str::random(12),
                 'username' => $faker->unique()->username,
                 'email' => $faker->unique()->email,
                 'phone' => $faker->unique()->phoneNumber,
                 'password' => bcrypt('secret'),
-                
+
             ]);
 
         }

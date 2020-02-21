@@ -13,17 +13,34 @@ class RoleSeed extends Seeder
     {
         //
         // $faker = Faker\Factory::create();
-        // for ($i = 0; $i < 100; $i++) {
+        \App\Models\Role::create([
+            'slug' => 'ADMIN',
+            'code' => 'A',
+            'name' => 'admin',
+        ]);
+        \App\Models\Role::create([
+            'slug' => 'SELLER',
+            'code' => 'B',
+            'name' => 'seller',
+        ]);
+        \App\Models\Role::create([
+            'slug' => 'USER',
+            'code' => 'A',
+            'name' => 'user',
+        ]);
 
-        //     DB::table('users')->insert([ //,
-        //         'uuid' => Str::random(12),
-        //         'username' => $faker->username,
-        //         'email' => $faker->unique()->email,
-        //         'phone' => $faker->phoneNumber,
-        //         'password' => bcrypt('secret'),
-                
-        //     ]);
-
-        // }
+        
+        DB::table('role_user')->insert([ //,
+            'user_id' => 1,
+            'role_id' => 1,
+        ]);
+        DB::table('role_user')->insert([ //,
+            'user_id' => 1,
+            'role_id' => 2,
+        ]);
+        DB::table('role_user')->insert([ //,
+            'user_id' => 1,
+            'role_id' => 3,
+        ]);
     }
 }

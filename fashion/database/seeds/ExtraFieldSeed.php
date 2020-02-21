@@ -16,7 +16,7 @@ class ExtraFieldSeed extends Seeder
         for ($i = 1; $i < 100; $i++) {
             for ($j = 1; $j < 20; $j++) {
 
-                DB::table('extra_fields')->insert([ //,
+                \App\Models\ExtraField::create([ //,
                     'name' => $faker->name,
                     'category_id' => $i,
                     

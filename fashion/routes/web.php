@@ -59,6 +59,8 @@ Route::prefix("/admin")->middleware(['admin'])->namespace('Admin')->group(functi
     Route::post('/properties/add/{category_id}', 'CategoriesController@propertiesAdd')->name('panel.admin.properties.add');
     Route::DELETE('/property/{property_id}', 'CategoriesController@propertyDelete')->name('panel.admin.property.delete');
 
+    Route::get('/sellers/{id?}', 'SellersController@sellers')->name('panel.admin.sellers');//////////////////////
+    Route::get('/seler/update/{id?}', 'SellersController@sellerUpade')->name('panel.admin.sellers.update');
 });
 
 

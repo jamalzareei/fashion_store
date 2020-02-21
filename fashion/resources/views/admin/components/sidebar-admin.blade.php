@@ -49,6 +49,16 @@
                 </ul>
             </li>
             
+            
+            <li class="  "> 
+                <a href="" class="waves-effect " class="small">
+                    <i class="fa fa-product-hunt zmdi-hc-fw fa-fw"></i> 
+                    <span class="hide-menu"> فروشندگان <span class="fa arrow"></span></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href="{{ route('panel.admin.sellers') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>فروشندگان</a> </li>
+                </ul>
+            </li>
 
             <li class="nav-small-cap">-------------</li>
             <li><a href="{{ route('log-out') }}" class="waves-effect"><i class="zmdi zmdi-power zmdi-hc-fw fa-fw"></i> <span class="hide-menu">خروج</span></a></li>

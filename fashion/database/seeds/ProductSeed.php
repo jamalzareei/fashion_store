@@ -17,7 +17,8 @@ class ProductSeed extends Seeder
         for ($i = 1; $i < 100; $i++) {
             for ($k = 1; $k < 20; $k++) {
 
-                DB::table('products')->insert([ //,
+                \App\Models\Product::create([ //,
+                // DB::table('products')->insert([ //,
                     'name' => $faker->name,
                     'code' => $faker->unique()->ean8,
                     'slug' => $faker->unique()->slug,

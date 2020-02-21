@@ -16,6 +16,7 @@ class CreateSellersTable extends Migration
         Schema::create('sellers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->bigInteger('user_id');
             $table->string('manager');
             $table->string('phones');
@@ -25,6 +26,7 @@ class CreateSellersTable extends Migration
             $table->text('address');
             $table->text('about')->nullable();
             $table->integer('shipping_cost')->default(0);
+            $table->integer('time_transfor')->default(0);
             $table->integer('active')->default(1);
             $table->integer('active_admin')->default(0);
             $table->timestamps();

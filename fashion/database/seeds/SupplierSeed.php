@@ -12,18 +12,22 @@ class SupplierSeed extends Seeder
     public function run()
     {
         //
-        // $faker = Faker\Factory::create();
-        // for ($i = 0; $i < 100; $i++) {
+        $faker = Faker\Factory::create();
+        for ($i = 1; $i < 100; $i++) {
 
-        //     DB::table('users')->insert([ //,
-        //         'uuid' => Str::random(12),
-        //         'username' => $faker->username,
-        //         'email' => $faker->unique()->email,
-        //         'phone' => $faker->phoneNumber,
-        //         'password' => bcrypt('secret'),
+            \App\Models\Supplier::create([ //,
+            // DB::table('sellers')->insert([ //,
+                'name' => $faker->title,
+                'user_id' => $i,
+                'manager' => $faker->title,
+                'phones' => $faker->title,
+                'country_id' => 1,
+                'state_id' => 1,
+                'city_id' => 1,
+                'address' => $faker->address,
                 
-        //     ]);
+            ]);
 
-        // }
+        }
     }
 }

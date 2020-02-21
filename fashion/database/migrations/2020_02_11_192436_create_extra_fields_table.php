@@ -16,6 +16,7 @@ class CreateExtraFieldsTable extends Migration
         Schema::create('extra_fields', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->integer('order')->default(1);
             $table->bigInteger('category_id');
             $table->integer('active')->default(1);

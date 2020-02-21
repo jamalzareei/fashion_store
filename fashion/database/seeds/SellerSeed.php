@@ -15,7 +15,8 @@ class SellerSeed extends Seeder
         $faker = Faker\Factory::create();
         for ($i = 1; $i < 100; $i++) {
 
-            DB::table('sellers')->insert([ //,
+            \App\Models\Seller::create([ //,
+            // DB::table('sellers')->insert([ //,
                 'name' => $faker->title,
                 'user_id' => $i,
                 'manager' => $faker->title,

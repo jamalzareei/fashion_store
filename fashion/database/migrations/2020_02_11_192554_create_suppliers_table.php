@@ -16,6 +16,7 @@ class CreateSuppliersTable extends Migration
         Schema::create('suppliers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('user_id');
             $table->string('manager');
             $table->string('phones');
@@ -24,6 +25,8 @@ class CreateSuppliersTable extends Migration
             $table->integer('city_id');
             $table->text('address');
             $table->text('about')->nullable();
+            $table->integer('shipping_cost')->default(0);
+            $table->integer('time_transfor')->default(0);
             $table->integer('active')->default(1);
             $table->integer('active_admin')->default(0);
             $table->timestamps();
