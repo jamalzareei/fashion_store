@@ -37,4 +37,9 @@ class Category extends Model
     {
         return $this->morphMany('App\Models\Image', 'imageable');
     }
+    
+    public function products()
+    {
+        return $this->belongsToMany('App\Models\Product');
+    }
 }

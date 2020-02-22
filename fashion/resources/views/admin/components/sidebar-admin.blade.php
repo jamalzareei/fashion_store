@@ -59,6 +59,17 @@
                     <li> <a href="{{ route('panel.admin.sellers') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>فروشندگان</a> </li>
                 </ul>
             </li>
+            
+            <li class=" {{ (auth()->user()->plan_id == 2 || auth()->user()->plan_id == 3) ? '' : 'disabled-' }} "> 
+                <a href="" class="waves-effect " class="small">
+                    <i class="fa fa-product-hunt zmdi-hc-fw fa-fw"></i> 
+                    <span class="hide-menu"> محصولات <span class="fa arrow"></span></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href="{{ route('panel.admin.product.add') }}">اضافه کردن محصول</a> </li>
+                    <li> <a href="{{ route('panel.admin.products') }}" class="small">لیست محصولات</a> </li>
+                </ul>
+            </li>
 
             <li class="nav-small-cap">-------------</li>
             <li><a href="{{ route('log-out') }}" class="waves-effect"><i class="zmdi zmdi-power zmdi-hc-fw fa-fw"></i> <span class="hide-menu">خروج</span></a></li>

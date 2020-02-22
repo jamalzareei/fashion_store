@@ -248,14 +248,12 @@ function delete_row(url, element, value_select) {
     });
 }
 
-function changeCategory(url, categoryid, element) {
+function changeCategory(url, id, element) {
     $.ajax({
         url: url,
         method: 'post',
-        data: { ajax: 'true', categoryid: categoryid },
+        data: { ajax: 'true', id: id },
         success: function(response) {
-
-            console.log(response);
             $(element).html(response);
         },
         error: function(request, status, error) {

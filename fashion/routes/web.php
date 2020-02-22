@@ -64,6 +64,24 @@ Route::prefix("/admin")->middleware(['admin'])->namespace('Admin')->group(functi
     Route::get('/seller/{slug}', 'SellersController@seller')->name('panel.admin.seller');
     Route::post('/seler/update/{id}', 'SellersController@sellerUpdate')->name('panel.admin.sellers.update');
     Route::post('/seler/update/tell/{id}', 'SellersController@sellerUpdateTell')->name('panel.admin.sellers.tell.update');
+
+    
+    Route::post('/changeCategories', 'CategoriesController@changeCategories')->name('categories.change');
+
+    Route::get('/list-products/{product?}', 'ProductsController@index')->name('panel.admin.products');
+    Route::get('/add-product', 'ProductsController@addProduct')->name('panel.admin.product.add');
+    Route::post('/add-product', 'ProductsController@addProductPost')->name('panel.admin.product.add.post');
+    Route::get('/edit-product/{slug}', 'ProductsController@editProduct')->name('panel.admin.product.edit');
+    Route::post('/change-active-product/{id}', 'ProductsController@changeStatus')->name('panel.admin.product.change.status.post');
+
+    Route::DELETE('/delete-product/{id}', 'ProductsController@deleteProductPost')->name('panel.admin.product.delete.post');
+    
+    Route::post('/edit-product-step-1', 'ProductsController@editProductStep1')->name('panel.product.admin.step.1.post');
+    Route::post('/edit-product-step-2', 'ProductsController@editProductStep2')->name('panel.product.admin.step.2.post');
+    Route::DELETE('/edit-product-step-2-delete/{id}', 'ProductsController@editProductStep2Delete')->name('panel.product.admin.step.2.delete.post');
+    Route::post('/edit-product-step-3', 'ProductsController@editProductStep3')->name('panel.product.admin.step.3.post');
+    Route::post('/edit-product-step-4', 'ProductsController@editProductStep4')->name('panel.product.admin.step.4.post');
+
 });
 
 

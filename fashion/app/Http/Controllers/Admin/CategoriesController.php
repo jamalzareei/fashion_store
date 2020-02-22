@@ -41,7 +41,6 @@ class CategoriesController extends Controller
         ]);
     }
 
-    
     public function categoriesUpdate(Request $request)
     {
         // return $request->all();
@@ -118,7 +117,7 @@ class CategoriesController extends Controller
 
         if($photos){
             $icon = Image::updateOrCreate(
-                ['imageable_id' => $category->id],
+                ['imageable_id' => $category->id, 'imageable_type' => 'App\Models\Category'],
                 [
                     'path' => $photos, 
                     'imageable_type' => 'App\Models\Category', 
@@ -196,7 +195,7 @@ class CategoriesController extends Controller
                 UploadService::destroyFile($iconOld->path);
             }
             $icon = Image::updateOrCreate(
-                ['imageable_id' => $category->id],
+                ['imageable_id' => $category->id, 'imageable_type' => 'App\Models\Category'],
                 [
                     'path' => $photos, 
                     'imageable_type' => 'App\Models\Category', 
@@ -373,5 +372,30 @@ class CategoriesController extends Controller
             'status' => 'success',
             'data' => '',
         ]);
+    }
+
+    
+    public function changeCategories( Request $request)
+    {
+        // return $request->all();
+        # code...
+        $request->validate([
+            'id' => 'required|exists:categories,id',
+        ]);
+        $categories = Category::orderBy('id')
+            ->select('name', 'id')
+            ->where('parent_id', $request->id)
+            ->where('menu', '1')
+            ->where('add_product', '1')
+            ->where('active', '1')
+            ->get();
+
+        $data = '<option > -- انتخاب دسته بندی --</option>';
+        foreach ($categories as $category){
+
+            $data .= '<option value="'.$category->id.'">'.$category->name.'</option>';
+        }
+        
+        return $data;
     }
 }

@@ -21,4 +21,23 @@ class Product extends Model
             ]
         ];
     }
+    
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category');
+    }
+    
+    public function image()
+    {
+        return $this->morphMany('App\Models\Image', 'imageable');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+    public function seller()
+    {
+        return $this->belongsTo('App\Models\Seller');
+    }
 }

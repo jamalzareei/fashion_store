@@ -14,17 +14,17 @@
         <div class="panel panel-danger">
             <div class="panel-heading">{{ $title }}</div>
             <div class="panel-body pt-5">
-                    <form class="floating-labels mt-5 ajaxUpload" action="{{ route('add.product.supplier.post') }}" method="POST" enctype="multipart/form-data">
+                    <form class="floating-labels mt-5 ajaxUpload" action="{{ route('panel.admin.product.add.post') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group col-md-6 mb-5 float-left">
-                            <input type="text" class="form-control" id="product" required name="product" ><span class="highlight"></span> <span class="bar"></span>
-                            <label for="product">نام محصول</label>
-                            <span class="help-block text-danger small error-product"></span>
+                            <input type="text" class="form-control" id="name" required name="name" ><span class="highlight"></span> <span class="bar"></span>
+                            <label for="name">نام محصول</label>
+                            <span class="help-block text-danger small error-name"></span>
                         </div>
                         <div class="form-group col-md-6 mb-5 float-left">
-                            <input type="text" class="form-control" id="productcode" required name="productcode" value="{{$lastproduct_id}}"><span class="highlight"></span> <span class="bar"></span>
-                            <label for="productcode">کد محصول</label>
-                            <span class="help-block text-danger small error-productcode"></span>
+                            <input type="text" class="form-control" id="code" required name="code" value="{{$code}}"><span class="highlight"></span> <span class="bar"></span>
+                            <label for="code">کد محصول</label>
+                            <span class="help-block text-danger small error-code"></span>
                         </div>
                         <div class="form-group col-md-12 mb-5 float-left">
                             @include('admin.components.category', ['categories' => $categories])
@@ -40,6 +40,19 @@
                                     <div class="form-control-feedback text-danger error-imageUrl"></div>
                             </small>
                             
+                        </div>
+                        
+                        <div class="form-group col-md-6 mb-5 float-left">
+                            <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="5"></textarea>
+                            <span class="highlight"></span> <span class="bar"></span>
+                            <label for="meta_keywords">متا کیورد</label>
+                            <span class="help-block text-danger small error-meta_keywords"></span>
+                        </div>
+                        <div class="form-group col-md-6 mb-5 float-left">
+                            <textarea name="meta_description" class="form-control" id="meta_description" rows="5"></textarea>
+                            <span class="highlight"></span> <span class="bar"></span>
+                            <label for="meta_description">متا توضیحات</label>
+                            <span class="help-block text-danger small error-meta_description"></span>
                         </div>
 
                         <button type="submit" class="btn btn-success waves-effect waves-light m-l-10">افزودن</button>
