@@ -81,6 +81,7 @@ Route::prefix("/admin")->middleware(['admin'])->namespace('Admin')->group(functi
     Route::DELETE('/edit-product-step-2-delete/{id}', 'ProductsController@editProductStep2Delete')->name('panel.product.admin.step.2.delete.post');
     Route::post('/edit-product-step-3', 'ProductsController@editProductStep3')->name('panel.product.admin.step.3.post');
     Route::post('/edit-product-step-4', 'ProductsController@editProductStep4')->name('panel.product.admin.step.4.post');
+    Route::post('/edit-product-step-5', 'ProductsController@editProductStep5')->name('panel.product.admin.step.5.post');
 
 });
 

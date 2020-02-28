@@ -46,7 +46,7 @@
                     </th>
                     
                     <th class="text-center">
-                        <a class="btn btn-twitter waves-effect btn-circle waves-light" title="ویرایش" data-title="ویرایش" href="{{ route('panel.admin.product.edit', ['id'=>$product->slug]) }}"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-twitter waves-effect btn-circle waves-light" title="ویرایش" data-title="ویرایش" href="{{ route('panel.admin.product.edit', ['slug'=>$product->slug]) }}"><i class="fa fa-edit"></i></a>
                         <i onclick="delete_('{{ route('panel.admin.product.delete.post', ['id'=>$product->id]) }}', '{{ url()->full() }}')" class="btn btn-youtube waves-effect btn-circle float-right waves-light"><i class="fa fa-times"></i> </i>
                     </th>
                 </tr>

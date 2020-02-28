@@ -2,12 +2,11 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>کد محصول</th>
-            <th>نام محصول</th>
-            <th>فروشنده مرتبط</th>
-            <th>قیمت اصلی</th>
+            <th>فروشنده</th>
+            <th>قیمت</th>
+            <th>تعداد</th>
             <th>درصد تخفیف</th>
-            <th>هزینه نصب</th>
+            <th>ویژگی ها</th>
             <th>زمان تحویل</th>
         </tr>
     </thead>
@@ -15,13 +14,12 @@
         @forelse ($prices as $key => $price)
             <tr id="delete-{{ $price->id }}">
                 <td>{{$key+1}}</td>
-                <td>{{$price->product->productcode}}</td>
-                <td>{{$price->product->product}}</td>
-                <td>{{($price->merchant) ? $price->merchant->title : 'قیمت کارخانه'}}</td>
-                <td>{{$price->price}} ریال</td>
-                <td>{{$price->discount}} %</td>
-                <td>@if ($price->installation_costs){{$price->installation_costs}} ریال @endif</td>
-                <td>@if ($price->delivery_time) {{$price->delivery_time}} روز @endif</td>
+                <td>{{$price->seller_id}}</td>
+                <td>{{$price->price}}</td>
+                <td>{{($price->count)}}</td>
+                <td>درصد تخفیف</td>
+                <td>ویژگی ها</td>
+                <td>زمان تحویل</td>
             </tr>
         @empty
             <tr>

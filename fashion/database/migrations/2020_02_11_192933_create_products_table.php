@@ -34,8 +34,8 @@ class CreateProductsTable extends Migration
             $table->bigInteger('category_id');
             $table->bigInteger('product_id');
         });
-        Schema::create('extra_feild_product', function (Blueprint $table) {
-            $table->bigInteger('extra_feild_id');
+        Schema::create('extra_field_product', function (Blueprint $table) {
+            $table->bigInteger('extra_field_id');
             $table->bigInteger('product_id');
             $table->text('value');
         });

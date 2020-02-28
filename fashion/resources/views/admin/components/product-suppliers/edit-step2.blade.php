@@ -1,6 +1,6 @@
-<form action="{{ route('edit.product.step.2.supplier.post') }}" method="POST" class="dropzone" id="dropzone" enctype="multipart/form-data">
+<form action="{{ route('panel.product.admin.step.2.post') }}" method="POST" class="dropzone" id="dropzone" enctype="multipart/form-data">
     @csrf
-    <input type="hidden" name="productid" value="{{ $product->productid }}">
+    <input type="hidden" name="id" value="{{ $product->id }}">
     <div class="fallback">
         <input name="file" type="file" multiple>
     </div>
@@ -8,8 +8,7 @@
 <div class="popup-gallery m-t-30" id="showListGallery">
         {{--  <pre> {{var_dump($product->images)}}</pre>  --}}
     @forelse ($product->images as $image)
-        @include('admin.components.image-gallery-product-suppliers', [ 'image' => $image])
-    
+        @include('admin.components.image-gallery-product', [ 'image' => $image])
     @empty
         <div class="alert alert-warning"> فایلی آپلود نشده است. </div>
     @endforelse

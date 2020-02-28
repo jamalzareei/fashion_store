@@ -21,6 +21,7 @@ class CreateExtraFieldsTable extends Migration
             $table->bigInteger('category_id');
             $table->integer('active')->default(1);
             $table->integer('show_less')->default(0); // namayesh dar list kotah mahsol
+            $table->integer('price')->default(0); // namayesh dar list kotah mahsol
             $table->text('default_list')->nullable();
             $table->integer('filter')->default(0);
             $table->timestamps();

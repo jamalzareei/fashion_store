@@ -22,4 +22,9 @@ class ExtraField extends Model
             ]
         ];
     }
+
+    public function extrafieldsproduct()
+    {
+        return $this->hasMany('App\Models\ExtraFieldsProduct');
+    }
 }

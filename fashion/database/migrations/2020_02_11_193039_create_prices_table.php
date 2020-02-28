@@ -22,6 +22,10 @@ class CreatePricesTable extends Migration
             $table->decimal('price',16,2);
             $table->string('count')->default(1);
             $table->string('unit')->nullable();
+            $table->decimal('discount',16,2)->nullable();
+            $table->string('type_discount')->default('PERSENT');
+            $table->timestamp('start_discount_at')->nullable();
+            $table->timestamp('end_discount_at')->nullable();
             $table->decimal('tax',16,2)->default(0);
             $table->timestamps();
         });
