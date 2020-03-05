@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\PanelAdmin;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Services\UploadService;
 use DB;
 
 class PagesController extends Controller
@@ -14,7 +15,9 @@ class PagesController extends Controller
     {
         $title = ($request->title) ? $request->title : null;
         # code...
-        $pages = Page::orderBy('orderby')->when($title, function($query) use($title){ $query->where('title', 'like', "%$title%"); })->get();
+        $pages = Page::orderby('order')
+        ->when($title, function($query) use($title){ $query->where('title', 'like', "%$title%"); })
+        ->get();
 
         // return $pages;
 
@@ -30,16 +33,16 @@ class PagesController extends Controller
 
         foreach ($request->data as $key => $value) {
             # code...
-            $active = isset($value['active']) ? 'Y' : 'N';
+            $active = isset($value['active']) ? '1' : '0';
 
-            if($value['title']){
-                Page::where('pageid', $key)->update([
-                    'title' => $value['title'],
-                    'level' => $value['level'],
-                    'orderby' => $value['orderby'],
+            if($value['name']){
+                Page::where('id', $key)->update([
+                    'name' => $value['name'],
+                    // 'level' => $value['level'],
+                    'order' => $value['order'],
                     'active' => $active,
-                    'language' => 'IR',
-                    'place' => $value['place'],
+                    // 'language' => 'IR',
+                    'position' => $value['position'],
                 ]);
             }
         }
@@ -51,62 +54,69 @@ class PagesController extends Controller
         ]);
     }
 
-    public function pageEdit(Request $request, $pageid)
+    public function pageEdit(Request $request, $id)
     {
         # code...
-        $page = Page::where('pageid', $pageid)->first();
+        $page = Page::where('id', $id)->first();
         
         return view('admin.pages-admin.add-page', [
             'page'    => $page,
             'title'    => ' ویرایش '. $page->title,
-            'description'    => file_get_contents("http://cerampakhsh.com/skin1/pages/IR/".$page->filename),
-            'routePost' => route('panel.adminer.page.update.pageid', ['pageid' => $page->pageid])
+            'description'    => @file_get_contents("http://cerampakhsh.com/skin1/pages/IR/".$page->name_en),
+            'routePost' => route('panel.admin.page.update.id', ['id' => $page->id])
         ]);
     }
 
-    public function pageUpdate(Request $request, $pageid = null)
+    public function pageUpdate(Request $request, $id = null)
     {
         // return $request->all();
         $request->validate([
-            'title'=> "required",
-            'filename'=> 'required',
-            'place'=> "required",
-            'orderby'=> "required",
-            'description'=> 'required',
+            'name'=> "required",
+            'name_en'=> 'required',
+            'position'=> "required",
+            'order'=> "required",
+            // 'fileupload'=> 'required',
         ]);
 
-        $active = isset($request->active) ? 'Y' : 'N';
+        $active = isset($request->active) ? '1' : '0';
         // return $active;
 
-        $page = Page::where('pageid',  $pageid)->update([
-            'filename' => $request->filename.'.html', 
-            'title' => $request->title, 
-            'level' => 'E', 
-            'orderby' => $request->orderby, 
+        $page = Page::where('id',  $id)->update([
+            'name_en' => $request->name_en.'.html', 
+            'name' => $request->name, 
+            // 'level' => 'E', 
+            'order' => $request->order, 
             'active' => $active, 
-            'language' => 'IR', 
-            'place' => $request->place, 
-            'url' => '', 
+            // 'language' => 'IR', 
+            'position' => $request->position, 
+            // 'url' => '', 
             'meta_keywords' => $request->meta_keywords, 
-            'meta_desciption' => $request->meta_desciption
+            'meta_description' => $request->meta_description
         ]);
 
-        $result = $this->callAPI('GET', ['file' => 'IR/'.$request->filename.'.html', 'text' => $request->description]);
-
-        if($result != 'success'){
-            return [
-                'title' => '',
-                'message' => 'دوباره تلاش نمایید',
-                'status' => 'error',
-                'data' => $result,
-            ];
+        if($request->fileupload && $request->fileupload != 'undefined'){
+            $path = "IR";
+            $photos = [$request->fileupload];
+            $photos = UploadService::saveFileHtml($path, $photos , $request->name_en);
+            if(!$photos){
+                return [
+                    'title' => '',
+                    'message' => 'دوباره تلاش نمایید',
+                    'status' => 'error',
+                    'data' => $result,
+                ];
+            }
         }
+
+        // $result = $this->callAPI('GET', ['file' => 'IR/'.$request->name_en.'.html', 'text' => $request->description]);
+
+        
 
         return [
             'title' => '',
             'message' => 'با موفقیت ذخیره گردید.',
             'status' => 'success',
-            'data' => $result,
+            'data' => '',
         ];
 
     }
@@ -114,28 +124,27 @@ class PagesController extends Controller
     public function pageAdd(Request $request)
     {
 
-        $statement = DB::select("SHOW TABLE STATUS LIKE 'kimiagar_pages'");
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'pages'");
         $nextId = $statement[0]->Auto_increment;
 
         $page = new \stdClass();
-        $page->filename = 'cerampakhsh'.($nextId);
-        // var_dump($page->filename);return;
-        // return Page::latest('pageid')->first();
-        $page->title = "";
-        $page->level = "E";
-        $page->orderby = 1;
-        $page->active = "Y";
-        $page->language = "IR";
-        $page->place = "FOOTER";
+        $page->name_en = 'zareie-'.($nextId);
+        // var_dump($page->name_en);return;
+        // return Page::latest('id')->first();
+        $page->name = "";
+        $page->order = 1;
+        $page->active = "1";
+        // $page->language = "IR";
+        $page->position = "FOOTER";
         $page->url = null;
         $page->meta_keywords = null;
-        $page->meta_desciption = null;
+        $page->meta_description = null;
         
         return view('admin.pages-admin.add-page', [
             'page'    => $page,
             'title'    => 'افزودن صفحه ایستا',
             'description'    => '',
-            'routePost' => route('panel.adminer.page.add.post')
+            'routePost' => route('panel.admin.page.add.post')
         ]);
     }
 
@@ -145,52 +154,51 @@ class PagesController extends Controller
         // return $request->all();
 
         $request->validate([
-            'title'=> "required",
-            'filename'=> 'required',
-            'place'=> "required",
-            'orderby'=> "required",
-            'description'=> 'required',
+            'name'=> "required",
+            'name_en'=> 'required',
+            'position'=> "required",
+            'order'=> "required",
+            // 'description'=> 'required',
         ]);
 
 
-        $active = isset($request->active) ? 'Y' : 'N';
+        $active = isset($request->active) ? '1' : '0';
         // return $active;
 
         $page = Page::create([
-            'filename' => $request->filename.'.html', 
-            'title' => $request->title, 
-            'level' => 'E', 
-            'orderby' => $request->orderby, 
+            'name_en' => $request->name_en.'.html', 
+            'name' => $request->name, 
+            'title' => $request->name, 
+            // 'level' => 'E', 
+            'order' => $request->order, 
             'active' => $active, 
-            'language' => 'IR', 
-            'place' => $request->place, 
-            'url' => '', 
+            // 'language' => 'IR', 
+            'position' => $request->position, 
+            // 'url' => '', 
             'meta_keywords' => $request->meta_keywords, 
-            'meta_desciption' => $request->meta_desciption
+            'meta_description' => $request->meta_description
         ]);
 
-        $result = $this->callAPI('GET', ['file' => 'IR/'.$request->filename.'.html', 'text' => $request->description]);
-        if($result != 'success'){
-            return [
-                'title' => '',
-                'message' => 'دوباره تلاش نمایید',
-                'status' => 'error',
-                'data' => $result,
-            ];
+        // $result = $this->callAPI('GET', ['file' => 'IR/'.$request->name_en.'.html', 'text' => $request->description]);
+        if($request->fileupload && $request->fileupload != 'undefined'){
+            $path = "uploads/pages";
+            $photos = [$request->fileupload];
+            $photos = UploadService::saveFileHtml($path, $photos , $request->name_en);
         }
+        
         
         return [
             'title' => '',
             'message' => 'با موفقیت ذخیره گردید.',
             'status' => 'success',
-            'data' => $result,
+            'data' => '',
         ];
     }
 
-    public function pageDelete(Request $request, $pageid)
+    public function pageDelete(Request $request, $id)
     {
         # code...
-        $page = Page::where('pageid', $pageid)->first();
+        $page = Page::where('id', $id)->first();
 
         if(!$page){
             if (request()->ajax) {
@@ -201,7 +209,7 @@ class PagesController extends Controller
                     'data' => '',
                 ];
             } else {
-                return redirect()->route('panel.adminer.pages')->with('noty', [
+                return redirect()->route('panel.admin.pages')->with('noty', [
                     'title' => '',
                     'message' => 'پیج وجود ندارد',
                     'status' => 'error',
@@ -210,7 +218,7 @@ class PagesController extends Controller
             }
         }
 
-        $page = Page::where('pageid', $pageid)->delete();
+        $page = Page::where('id', $id)->delete();
 
         // return $user;
         if (request()->ajax) {
@@ -221,7 +229,7 @@ class PagesController extends Controller
                 'data' => '',
             ];
         } else {
-            return redirect()->route('panel.adminer.pages')->with('noty', [
+            return redirect()->route('panel.admin.pages')->with('noty', [
                 'title' => '',
                 'message' => 'با موفقیت حذف گردید.',
                 'status' => 'info',

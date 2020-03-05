@@ -13,7 +13,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6">
-                <form action="{{ route('panel.adminer.pages') }}" method="GET">
+                <form action="{{ route('panel.admin.pages') }}" method="GET">
                     <div class="row">
                         <div class="col-10">
                             <input type="text" name="title" class="form-control" placeholder="عنوان صفحه">
@@ -25,7 +25,7 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <a href="{{ route('panel.adminer.page.add') }}" class="btn btn-warning float-right"><i class="fa fa-plus"></i> اضافه کردن صفحه جدید </a>
+                <a href="{{ route('panel.admin.page.add') }}" class="btn btn-warning float-right"><i class="fa fa-plus"></i> اضافه کردن صفحه جدید </a>
             </div>
         </div>
         <hr>
@@ -34,7 +34,7 @@
             <div class="panel-body pt-5 row">
                 
                 <div class="col-lg-12 col-md-12 col-sm-12 pr-4">
-                    <form action="{{ route('panel.adminer.pages.update') }}" method="post">
+                    <form action="{{ route('panel.admin.pages.update') }}" method="post">
                         @csrf
                         <table class="table color-bordered-table inverse-bordered-table">
                             <thead>
@@ -47,7 +47,7 @@
                                     {{--  <th class="text-center">#</th>  --}}
                                     <th class="text-center">موقعیت</th>
                                     <th class="text-center">نام پیج</th>
-                                    <th class="text-center">سطح</th>
+                                    <th class="text-center">نام فایل</th>
                                     <th class="text-center">فعال</th>
                                     <th class="text-center">محل نمایش</th>
                                     <th class="text-center">پیش نمایش</th>
@@ -56,37 +56,34 @@
                             </thead>
                             <tbody>
                                 @forelse ($pages as $key => $page)
-                                    <tr id="row-{{ $page->pageid }}">
+                                    <tr id="row-{{ $page->id }}">
                                         {{--  <th class="text-center">
-                                            <input type="checkbox" name="data[{{$page->pageid}}][check]" id="{{$page->pageid}}" value="1">
+                                            <input type="checkbox" name="data[{{$page->id}}][check]" id="{{$page->id}}" value="1">
                                         </th>  --}}
                                         <th class="text-center" width="100">
-                                            <input type="number" class="form-control" name="data[{{$page->pageid}}][orderby]" id="orderby{{$page->pageid}}" value="{{$page->orderby}}">
+                                            <input type="number" class="form-control" name="data[{{$page->id}}][order]" id="order{{$page->id}}" value="{{$page->order}}">
                                         </th>
                                         <th class="text-center">
-                                            <input type="text" class="form-control" name="data[{{$page->pageid}}][title]" id="title{{$page->pageid}}" value="{{$page->title}}">
+                                            <input type="text" class="form-control" name="data[{{$page->id}}][name]" id="name{{$page->id}}" value="{{$page->name}}">
                                         </th>
                                         <th class="text-center">
-                                            <select name="data[{{$page->pageid}}][level]" id="data[{{$page->pageid}}][level]" class="form-control">
-                                                <option value="E" {{ ($page->level == 'E') ? 'selected' : ''}}>سطح 1</option>
-                                                <option value="P" {{ ($page->level == 'P') ? 'selected' : ''}}>سطح 2</option>
+                                            <input type="text" class="form-control" name="data[{{$page->id}}][name_en]" id="name_en{{$page->id}}" value="{{$page->name_en}}">
+                                        </th>
+                                        <th class="text-center">
+                                            <input data-on-text="بلی" data-off-text="خیر" class="js-switch small" type="checkbox" data-size="small"  name="data[{{$page->id}}][active]" {{($page->active == '1') ? 'checked' : ''}} value="Y">
+                                        </th>
+                                        <th class="text-center">
+                                            <select name="data[{{$page->id}}][position]" id="data[{{$page->id}}][position]" class="form-control">
+                                                <option value="FOOTER" {{ ($page->position == 'FOOTER') ? 'selected' : ''}}>نمایش در فوتر</option>
+                                                <option value="CATEGORY" {{ ($page->position == 'CATEGORY') ? 'selected' : ''}}>نمایش در منو</option>
                                             </select>
                                         </th>
                                         <th class="text-center">
-                                            <input data-on-text="بلی" data-off-text="خیر" class="js-switch small" type="checkbox" data-size="small"  name="data[{{$page->pageid}}][active]" {{($page->active == 'Y') ? 'checked' : ''}} value="Y">
+                                            <a href="/page/{{$page->slug}}" target="_blank">پیش نمایش</a>
                                         </th>
                                         <th class="text-center">
-                                            <select name="data[{{$page->pageid}}][place]" id="data[{{$page->pageid}}][place]" class="form-control">
-                                                <option value="FOOTER" {{ ($page->place == 'FOOTER') ? 'selected' : ''}}>نمایش در فوتر</option>
-                                                <option value="CATEGORY" {{ ($page->place == 'CATEGORY') ? 'selected' : ''}}>نمایش در منو</option>
-                                            </select>
-                                        </th>
-                                        <th class="text-center">
-                                            <a href="https://cerampakhsh.com/page/{{str_replace(' ','+',($page->title) ? $page->title : 'jsj')}}/{{$page->pageid}}" target="_blank">پیش نمایش</a>
-                                        </th>
-                                        <th class="text-center">
-                                            <i onclick="delete_('{{ route('panel.adminer.page.delete', ['pageid'=>$page->pageid]) }}', '{{ route('panel.adminer.pages') }}')" class="btn btn-youtube waves-effect btn-circle float-right waves-light"><i class="fa fa-times"></i> </i>
-                                            <a class="btn btn-twitter waves-effect btn-circle waves-light" title="ویرایش" data-title="ویرایش" href="{{ route('panel.adminer.page.edit', ['pageid'=>$page->pageid]) }}"><i class="fa fa-edit"></i></a>
+                                            <i onclick="delete_('{{ route('panel.admin.page.delete', ['id'=>$page->id]) }}', '{{ route('panel.admin.pages') }}')" class="btn btn-youtube waves-effect btn-circle float-right waves-light"><i class="fa fa-times"></i> </i>
+                                            <a class="btn btn-twitter waves-effect btn-circle waves-light" title="ویرایش" data-title="ویرایش" href="{{ route('panel.admin.page.edit', ['id'=>$page->id]) }}"><i class="fa fa-edit"></i></a>
                                         </th>
                                     </tr>
                                 @empty

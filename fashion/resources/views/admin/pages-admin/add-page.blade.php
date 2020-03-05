@@ -10,20 +10,20 @@
         <div class="panel panel-danger">
             <div class="panel-heading">{{ $title }}</div>
             <div class="panel-body pt-5">
-                    <form class="floating-labels mt-5 ajaxForm" action="{{$routePost}}" method="POST" enctype="multipart/form-data">
+                    <form class="floating-labels mt-5 ajaxUpload" action="{{$routePost}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group col-md-6 mb-5 float-left">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="title" required name="title" value="{{($page) ? $page->title : ''}}" ><span class="highlight"></span> <span class="bar"></span>
-                                <label for="title">نام صفحه</label>
-                                <span class="help-block text-danger small error-title"></span>
+                                <input type="text" class="form-control" id="name" required name="name" value="{{($page) ? $page->name : ''}}" ><span class="highlight"></span> <span class="bar"></span>
+                                <label for="name">نام صفحه</label>
+                                <span class="help-block text-danger small error-name"></span>
                             </div>
                         </div>
                         <div class="form-group col-md-6 mb-5 float-left">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="filename" name="filename"  value="{{($page) ? str_replace('.html','',$page->filename) : ''}}"><span class="highlight"></span> <span class="bar"></span>
-                                <label for="filename">نام فایل</label>
-                                <span class="help-block text-danger small error-filename"></span>
+                                <input type="text" class="form-control" id="name_en" name="name_en"  value="{{($page) ? str_replace('.html','',$page->name_en) : ''}}"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="name_en">نام فایل</label>
+                                <span class="help-block text-danger small error-name_en"></span>
                             </div>
                         </div>
                         <div class="form-group col-md-4 mb-5 float-left">
@@ -31,35 +31,35 @@
                                 <div class="checkbox checkbox-circle checkbox-danger w-100">
                                 </div>
                                 <label for="checkbox_avail"> وضعیت (فعال / غیرفعال) </label>
-                                <input data-on-text="فعال" data-off-text="غیرفعال" class="js-switch small" type="checkbox" data-size="small"  name="active" {{($page->active == 'Y') ? 'checked' : ''}} value="Y">
+                                <input data-on-text="فعال" data-off-text="غیرفعال" class="js-switch small" type="checkbox" data-size="small"  name="active" {{($page->active == '1') ? 'checked' : ''}} value="1">
                             </div>
                         </div>
                         <div class="form-group col-md-4 mb-5 float-left">
                             <div class="m-4 row w-100">
-                                <select name="place" id="place" class="form-control">
-                                    <option value="FOOTER" {{ ($page->place == 'FOOTER') ? 'selected' : ''}}>نمایش در فوتر</option>
-                                    <option value="CATEGORY" {{ ($page->place == 'CATEGORY') ? 'selected' : ''}}>نمایش در منو</option>
+                                <select name="position" id="position" class="form-control">
+                                    <option value="FOOTER" {{ ($page->position == 'FOOTER') ? 'selected' : ''}}>نمایش در فوتر</option>
+                                    <option value="CATEGORY" {{ ($page->position == 'CATEGORY') ? 'selected' : ''}}>نمایش در منو</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group col-md-4 mb-5 float-left">
                             <div class="m-4 row w-100">                                
-                                <input type="number" class="form-control" id="orderby" required name="orderby" value="{{($page) ? $page->orderby : ''}}" ><span class="highlight"></span> <span class="bar"></span>
-                                <label for="orderby">موقعیت</label>
-                                <span class="help-block text-danger small error-orderby"></span>
+                                <input type="number" class="form-control" id="order" required name="order" value="{{($page) ? $page->order : ''}}" ><span class="highlight"></span> <span class="bar"></span>
+                                <label for="order">موقعیت</label>
+                                <span class="help-block text-danger small error-order"></span>
                             </div>
                         </div>
                         <div class="form-group col-md-12 mb-5 float-left">
-                            <a href="#" class="btn btn-danger btn-change-textarea">فعال / غیر فعال کردن ویرایش محتوای متنی</a>
-                        </div>
-                        <div class="form-group col-md-12 mb-5 float-left">
-                            <div class="form-group">
-                                <textarea name="description" class="form-control description1" id="description" rows="5"> {!!($description) ? $description : ''!!}</textarea>
-                                <span class="highlight"></span> <span class="bar"></span>
-                                <label for="description">محتوای صفحه</label>
-                                <span class="help-block text-danger small error-description"></span>
+                            <div class="form-group  row w-100">
+                                <label for="fileupload">اپلود فایل محتوای صفحه ( فرمت اچ تی ام ال)</label>
+                                <hr>
+                                    <input type="file" id="fileupload" name="fileupload" class="dropify file-upload">
+                                <small>
+                                        <div class="form-control-feedback text-danger error-fileupload"></div>
+                                </small>
                             </div>
                         </div>
+
                         <div class="form-group col-md-12 mb-5 float-left">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="meta_keywords" required name="meta_keywords" value="{{($page) ? $page->meta_keywords : ''}}" ><span class="highlight"></span> <span class="bar"></span>
@@ -69,9 +69,9 @@
                         </div>
                         <div class="form-group col-md-12 mb-5 float-left">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="meta_desciption" name="meta_desciption"  value="{{($page) ? $page->meta_desciption : ''}}"><span class="highlight"></span> <span class="bar"></span>
-                                <label for="meta_desciption">توضیحات متا تگ</label>
-                                <span class="help-block text-danger small error-meta_desciption"></span>
+                                <input type="text" class="form-control" id="meta_description" name="meta_description"  value="{{($page) ? $page->meta_description : ''}}"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="meta_description">توضیحات متا تگ</label>
+                                <span class="help-block text-danger small error-meta_description"></span>
                             </div>
                         </div>
 

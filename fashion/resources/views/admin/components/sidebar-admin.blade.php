@@ -32,7 +32,7 @@
                     <span class="hide-menu"> کاربران <span class="fa arrow"></span></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    {{--  <li> <a href="{{ route('panel.adminer.users.roles') }}"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>سطح دسترسی</a> </li>  --}}
+                    {{--  <li> <a href="{{ route('panel.admin.users.roles') }}"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>سطح دسترسی</a> </li>  --}}
                     <li> <a href="{{ route('admin.users') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>لیست کاربران</a> </li>
                     <li> <a href="{{ route('admin.roles') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>سطح های دسترسی</a> </li>
                 </ul>
@@ -69,6 +69,18 @@
                 <ul class="nav nav-second-level">
                     <li> <a href="{{ route('panel.admin.product.add') }}">اضافه کردن محصول</a> </li>
                     <li> <a href="{{ route('panel.admin.products') }}" class="small">لیست محصولات</a> </li>
+                </ul>
+            </li>
+
+            
+            <li class=" {{ (auth()->user()->plan_id == 2 || auth()->user()->plan_id == 3) ? '' : 'disabled-' }} "> 
+                <a href="" class="waves-effect " class="small">
+                    <i class="fa fa-product-hunt zmdi-hc-fw fa-fw"></i> 
+                    <span class="hide-menu"> صفحات ایستا <span class="fa arrow"></span></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href="{{ route('panel.admin.page.add') }}"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>اضافه کردن صفحه جدید</a> </li>
+                    <li> <a href="{{ route('panel.admin.pages') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>لیست صفحات ایستا</a> </li>
                 </ul>
             </li>
 
