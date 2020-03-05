@@ -21,7 +21,7 @@
                             <div class="white-box">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <form action="{{ route('panel.adminer.filemanager.post') }}" method="POST" class="dropzone" id="dropzone" enctype="multipart/form-data">
+                                        <form action="{{ route('panel.admin.filemanager.post') }}" method="POST" class="dropzone" id="dropzone" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="path" value="{{$path}}">
                                             <div class="fallback">
@@ -35,7 +35,7 @@
                                         <div class="row">
                                             @if ($pathBack)
                                                 <div class="col-md-12 col-12 m-2">
-                                                    <a href="{{ route('panel.adminer.filemanager') }}?path={{$pathBack}}">
+                                                    <a href="{{ route('panel.admin.filemanager') }}?path={{$pathBack}}">
                                                         <i class="fa fa-mail-reply"></i>
                                                         ../ 
                                                     </a>                                                
@@ -43,7 +43,7 @@
                                             @endif
                                             @foreach ($listFolders as $folder)
                                                 <div class="col-md-12 col-12 m-2">
-                                                    <a href="{{ route('panel.adminer.filemanager') }}?path={{$folder}}">
+                                                    <a href="{{ route('panel.admin.filemanager') }}?path={{$folder}}">
                                                         <i class="fa fa-folder"></i>
                                                         {{$folder}}
                                                     </a>
@@ -53,7 +53,7 @@
                                             <div class="col-md-12 col-12 m-2">
                                                 <i class="fa fa-file-photo-o"></i>
                                                 {{$file}}
-                                                <a href="{{ route('panel.adminer.filemanager.delete') }}?path={{$file}}"><i class="fa fa-times text-danger float-right mx-2 font-size h2"></i></a>
+                                                <a href="{{ route('panel.admin.filemanager.delete') }}?path={{$file}}"><i class="fa fa-times text-danger float-right mx-2 font-size h2"></i></a>
                                             </div>
                                             @endforeach
                                             {{--  <div class="col-12 m-2"><i class="fa fa-folder"></i> fa-folder</div>

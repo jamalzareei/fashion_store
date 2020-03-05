@@ -24,7 +24,13 @@
                     <span class="hide-menu"> داشبورد {{$userType}}</span>
                 </a>
             </li>
-
+            
+            <li class="active"> 
+                <a href="{{ route('panel.admin.filemanager') }}" class="waves-effect active">
+                    <i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw"></i> 
+                    <span class="hide-menu"> فایل منیجر</span>
+                </a>
+            </li>
             
             <li class="  "> 
                 <a href="" class="waves-effect " class="small">

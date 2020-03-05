@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\PanelAdmin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,15 +12,15 @@ class FilesController extends Controller
 
     function list(Request $request) {
 
-        $path = '../../cerampakhsh.com/httpdocs/files';
-        $fileList = glob('../../cerampakhsh.com/httpdocs/files/*');
+        $path = './public/uploads';
+        $fileList = glob('./public/uploads/*');
         $pathBack =null;
         if($request->path){
             $path = "$request->path";
             $fileList = glob("$request->path/*");
         }
         
-        if ($path != '../../cerampakhsh.com/httpdocs/files') {
+        if ($path != './public/uploads') {
             # code...
             $pathBack = substr($path, 0, strrpos($path, '/'));
         }
@@ -50,7 +50,7 @@ class FilesController extends Controller
         return view('admin.pages-admin.list-files', [
             'listFolders'   => $listFolders,
             'listFiles'     => $listFiles,
-            'path'          => str_replace('../../cerampakhsh.com/httpdocs/files/','',$path),
+            'path'          => str_replace('./public/','',$path),
             'pathBack'      => $pathBack,
             'title'         => 'فایل منیجر',
         ]);
@@ -66,7 +66,7 @@ class FilesController extends Controller
         ]);
         
         $date = date('Y-m-d');
-        $path = str_replace('../../httpdocs/files/','',$request->path);
+        $path = $request->path;
         // return $path;
         $photos = [$request->file];
         $photos = UploadService::saveFile($path, $photos);

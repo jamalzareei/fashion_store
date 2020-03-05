@@ -108,6 +108,12 @@ Route::prefix("/admin")->middleware(['admin'])->namespace('Admin')->group(functi
     Route::post('/pages/update', 'PagesController@pagesUpdate')->name('panel.admin.pages.update');
     Route::DELETE('/page/{id}', 'PagesController@pageDelete')->name('panel.admin.page.delete');
 
+    
+    Route::get('/file-manager', 'FilesController@list')->name('panel.admin.filemanager');//////////////////////
+    Route::post('/file-manager', 'FilesController@upload')->name('panel.admin.filemanager.post');//////////////////////
+    Route::get('/file-manager/delete', 'FilesController@delete')->name('panel.admin.filemanager.delete');//////////////////////
+
+    
 });
 
 
