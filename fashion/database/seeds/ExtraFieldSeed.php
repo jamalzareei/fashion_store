@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Josh\Faker\Faker;
 
 class ExtraFieldSeed extends Seeder
 {
@@ -12,12 +13,12 @@ class ExtraFieldSeed extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+        $faker = \Faker\Factory::create();
         for ($i = 1; $i < 100; $i++) {
             for ($j = 1; $j < 20; $j++) {
 
                 \App\Models\ExtraField::create([ //,
-                    'name' => $faker->name,
+                    'name' => Faker::fullname(),
                     'category_id' => $i,
                     
                 ]);

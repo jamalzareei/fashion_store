@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Josh\Faker\Faker;
 
 class SellerSeed extends Seeder
 {
@@ -12,19 +13,19 @@ class SellerSeed extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+        $faker = \Faker\Factory::create();
         for ($i = 1; $i < 100; $i++) {
 
             \App\Models\Seller::create([ //,
             // DB::table('sellers')->insert([ //,
-                'name' => $faker->title,
+                'name' => Faker::firstname(),
                 'user_id' => $i,
-                'manager' => $faker->title,
-                'phones' => $faker->title,
+                'manager' => Faker::lastname(),
+                'phones' => Faker::mobile(),
                 'country_id' => 1,
                 'state_id' => 1,
                 'city_id' => 1,
-                'address' => $faker->address,
+                'address' => Faker::address(),
                 
             ]);
 

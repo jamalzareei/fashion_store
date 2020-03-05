@@ -24,6 +24,8 @@ class CreateAddressesTable extends Migration
             $table->string('phone' ,20)->nullable();
             $table->string('tell', 20)->nullable();
             $table->text('address');
+            $table->text('latitude')->nullable();
+            $table->text('longitude')->nullable();
             $table->string('zipcode',20)->nullable();
             $table->timestamps();
         });

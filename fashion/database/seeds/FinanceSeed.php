@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Josh\Faker\Faker;
 
 class FinanceSeed extends Seeder
 {
@@ -12,12 +13,12 @@ class FinanceSeed extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+        $faker = \Faker\Factory::create();
         for ($i = 1; $i < 100; $i++) {
 
             DB::table('finances')->insert([ //,
-                'name' =>  $faker->name,
-                'bank' => $faker->name,
+                'name' =>  Faker::fullname(),
+                'bank' => Faker::fullname(),
                 'cart_number' => rand(10000,999999),
                 'shaba_number' => rand(10000,999999),
                 

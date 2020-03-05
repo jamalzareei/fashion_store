@@ -54,16 +54,16 @@
                                 @forelse ($sellers as $key => $seller)
                                     <tr id="row-{{ $seller->id }}">
                                         <th class="text-center">
-                                            <a href="{{ route('panel.admin.seller', ['slug'=>$seller->slug]) }}">{{$seller->manager}}</a>
+                                            <a href="{{ route('panel.admin.seller.edit', ['slug'=>$seller->slug]) }}">{{$seller->manager}}</a>
                                         </th>
                                         <th class="text-center">
-                                            <a href="{{ route('panel.admin.seller', ['slug'=>$seller->slug]) }}">{{$seller->name}}</a>
+                                            <a href="{{ route('panel.admin.seller.edit', ['slug'=>$seller->slug]) }}">{{$seller->name}}</a>
                                         </th>
                                         <th class="text-center">
-                                            <a href="{{ route('panel.admin.seller', ['slug'=>$seller->slug]) }}">{{$seller->phones}} <br> {{ $seller->user->username}}</a>
+                                            <a href="{{ route('panel.admin.seller.edit', ['slug'=>$seller->slug]) }}">{{$seller->phones}} <br> {{ $seller->user->username}}</a>
                                         </th>
                                         <th class="text-center">
-                                            <a href="{{ route('panel.admin.seller', ['slug'=>$seller->slug]) }}">{{$seller->state_id}}-{{$seller->city_id}}</a>
+                                            <a href="{{ route('panel.admin.seller.edit', ['slug'=>$seller->slug]) }}">{{$seller->state_id}}-{{$seller->city_id}}</a>
                                         </th>
                                         <th class="text-center">
                                             <input data-on-text="فعال" data-off-text="غیرفعال" class="js-switch small" type="checkbox" data-size="small"  name="data[{{$seller->id}}][active_admin]" {{($seller->active_verified_at) ? 'checked' : ''}} value="1" onchange="changeStatus('{{route('panel.admin.sellers.update', ['id' => $seller->id])}}',this)">
@@ -81,7 +81,7 @@
                                     <tr>
                                         <td colspan="7">
                                             <div class="alert alert-danger text-center">
-                                                هیچ دسته ای وجود ندارد
+                                                فروشنده ای وجود ندارد.
                                             </div>
                                         </td>
                                     </tr>

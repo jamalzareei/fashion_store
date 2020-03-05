@@ -56,6 +56,7 @@
                     <span class="hide-menu"> فروشندگان <span class="fa arrow"></span></span>
                 </a>
                 <ul class="nav nav-second-level">
+                    <li> <a href="{{ route('panel.admin.seller.add') }}">اضافه کردن فروشنده جدید</a> </li>
                     <li> <a href="{{ route('panel.admin.sellers') }}" class="small"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>فروشندگان</a> </li>
                 </ul>
             </li>

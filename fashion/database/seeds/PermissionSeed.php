@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Josh\Faker\Faker;
 
 class PermissionSeed extends Seeder
 {
@@ -12,7 +13,7 @@ class PermissionSeed extends Seeder
     public function run()
     {
         //
-        // $faker = Faker\Factory::create();
+        // $faker = \Faker\Factory::create();
         // for ($i = 0; $i < 100; $i++) {
 
         //     DB::table('permissions')->insert([ //,

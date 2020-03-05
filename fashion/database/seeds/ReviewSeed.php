@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Josh\Faker\Faker;
 
 class ReviewSeed extends Seeder
 {
@@ -12,17 +13,17 @@ class ReviewSeed extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+        $faker = \Faker\Factory::create();
         for ($i = 1; $i < 100; $i++) {
             for ($k = 1; $k < 20; $k++) {
 
                 DB::table('reviews')->insert([ //,
-                    'ip' => $faker->name,
-                    'name' => $faker->name,
-                    'email' => $faker->email,
+                    'ip' => $faker->ipv4,
+                    'name' => Faker::fullname(),
+                    'email' => Faker::email(),
                     'user_id' => $i,
                     'rate' => rand(1,5),
-                    'link_page' => $faker->name,
+                    'link_page' => Faker::website(),
                     'reviewable_id' => $i,
                     'reviewable_type' => 'App\Models\Produc',                
                 ]);
@@ -33,12 +34,12 @@ class ReviewSeed extends Seeder
             for ($k = 1; $k < 20; $k++) {
 
                 DB::table('reviews')->insert([ //,
-                    'ip' => $faker->name,
-                    'name' => $faker->name,
-                    'email' => $faker->email,
+                    'ip' => $faker->ipv4,
+                    'name' => Faker::fullname(),
+                    'email' => Faker::email(),
                     'user_id' => $i,
                     'rate' => rand(1,5),
-                    'link_page' => $faker->name,
+                    'link_page' => Faker::website(),
                     'reviewable_id' => $i,
                     'reviewable_type' => 'App\Models\Seller',                
                 ]);

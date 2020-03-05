@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Josh\Faker\Faker;
 
 class CategorySeed extends Seeder
 {
@@ -12,11 +13,11 @@ class CategorySeed extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+        $faker = \Faker\Factory::create();
         for ($i = 1; $i < 10; $i++) {
 
             DB::table('categories')->insert([ //,
-                'name' => $faker->title,
+                'name' => Faker::fullname(),
                 'slug' => $faker->unique()->username,
                 'parent_id' => 0,
                 
@@ -25,7 +26,7 @@ class CategorySeed extends Seeder
             for ($k = 1; $k < 10; $k++) {
 
                 DB::table('categories')->insert([ //,
-                    'name' => $faker->title,
+                    'name' => Faker::fullname(),
                     'slug' => $faker->unique()->username,
                     'parent_id' => $i,
                     
@@ -34,7 +35,7 @@ class CategorySeed extends Seeder
                 for ($j = 1; $j < 10; $j++) {
 
                     DB::table('categories')->insert([ //,
-                        'name' => $faker->title,
+                        'name' => Faker::fullname(),
                         'slug' => $faker->unique()->username,
                         'parent_id' => $k,
                         

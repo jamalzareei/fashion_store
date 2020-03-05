@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Josh\Faker\Faker;
 
 class ProductSeed extends Seeder
 {
@@ -13,13 +14,13 @@ class ProductSeed extends Seeder
     {
         //
         // factory(App\Models\Product::class, 100)->create();
-        $faker = Faker\Factory::create();
+        $faker = \Faker\Factory::create();
         for ($i = 1; $i < 100; $i++) {
             for ($k = 1; $k < 20; $k++) {
 
                 \App\Models\Product::create([ //,
                 // DB::table('products')->insert([ //,
-                    'name' => $faker->name,
+                    'name' => Faker::fullname(),
                     'code' => $faker->unique()->ean8,
                     'slug' => $faker->unique()->slug,
                     'user_id' => $i,
@@ -40,7 +41,7 @@ class ProductSeed extends Seeder
                 DB::table('extra_feild_product')->insert([ //,
                     'extra_feild_id' => rand(1,100),
                     'product_id' => $i,
-                    'value' => $faker->name,
+                    'value' => Faker::lastname(),
                 ]);
             }
         }

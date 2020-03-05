@@ -20,8 +20,9 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->bigInteger('user_id');
             $table->bigInteger('seller_id');
-            $table->integer('active')->default(1);
-            $table->integer('active_admin')->default(0);
+            $table->timestamp('active_at')->nullable();
+            $table->timestamp('active_admin__at')->nullable();
+            $table->integer('designer')->default(0); // niaz be tarh darad ya na?
             $table->string('description_short')->nullable();
             $table->string('description_full')->nullable();
             $table->string('meta_description')->nullable();

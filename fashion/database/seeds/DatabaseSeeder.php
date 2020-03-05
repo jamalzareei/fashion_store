@@ -12,8 +12,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        
         $this->call([
             UserSeed::class,
+            CategorySeed::class,
             AddressSeed::class,
             ExtraFieldSeed::class,
             FinanceSeed::class,
@@ -22,11 +24,16 @@ class DatabaseSeeder extends Seeder
             PermissionSeed::class,
             PriceSeed::class,
             RoleSeed::class,
+            // ProductSeed::class,
             ReviewSeed::class,
             SellerSeed::class,
             SosialSeed::class,
             SupplierSeed::class,
-            CategorySeed::class,
+            CountriesTableSeeder::class,
+            StatesTableSeeder::class,
+            CitiesTableSeeder::class
+
         ]);
+        
     }
 }
